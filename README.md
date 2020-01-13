@@ -1,2 +1,3 @@
 # Drone
-Ce repo est celui de la fonction "Return to home" du drone
+Ce repo est celui des différentes fonctions du drone.
+Reconnaissance d'images; contrôles et stabilisation, transmissions... 
