@@ -17,10 +17,13 @@ while True:
     low_d = np.array([94, 80, 2])
     high_d = np.array([126, 255, 255])
     mask2 = cv2.inRange(hsv_frame, low_d, high_d)
+
+    bilateral = cv2.medianBlur(mask2,15)
     
+    #display Masks
     cv2.imshow("Frame2", mask)
     cv2.imshow("Frame3", mask2)
-
+    cv2.imshow('bilateral Blur',bilateral)
     
     fps=cv2.getTickFrequency()/(cv2.getTickCount()-tickmark)
     cv2.putText(frame, "FPS: {:05.2f}".format(fps), (10, 30), cv2.FONT_HERSHEY_PLAIN, 2, (255, 0, 0), 2)
