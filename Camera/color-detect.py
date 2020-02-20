@@ -35,14 +35,10 @@ cap.release()
 cv2.destroyAllWindows()
 
 #should display contour point.
-
+print(contours)
 img = np.zeros((512,512,3), np.uint8)
 
 for cnt in contours:
-    
-    print (cnt[[0]])
-    if len(cnt[[0]]) > 0:
-        print( cnt[[[0]]], cnt[[[1]]])
-        cv2.circle(img, (cnt[[[0]]],cnt[[[1]]]), 10, (0,0,255), -1)
+    cv2.circle(img, (cnt[[[tuple(0)]]],cnt[[[tuple(1)]]]), 10, (0,0,255), -1)
 
 cv2.imshow("test",img)
