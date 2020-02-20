@@ -14,8 +14,8 @@ while True:
     high_c = np.array([179, 255, 255])
     mask = cv2.inRange(hsv_frame, low_c, high_c)
     
-    low_d = np.array([240, 100, 50])
-    high_d = np.array([240, 100, 80])
+    low_d = np.array([94, 80, 2])
+    high_d = np.array([126, 255, 255])
     mask2 = cv2.inRange(hsv_frame, low_d, high_d)
     
     cv2.imshow("Frame2", mask)
