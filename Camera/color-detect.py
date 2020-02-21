@@ -28,22 +28,25 @@ while True:
 
     #Contour finding and display
     contours, hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_NONE)
-    try:
-        cv2.drawContours(frame, contours, -1, (0,255,0), 3)
-    except cv2.error:
-        print ("err")
+    if a==1:
+        try:
+            cv2.drawContours(frame, contours, -1, (0,255,0), 3)
+        except cv2.error:
+            print ("err")
 
-
+    
     #Just for debug - contour point (one point per contour)
     if key == 97:
         if a == 0:
             a = 1
         elif a == 1:
+            a = 2
+        elif a == 2:
             a = 0
         print(a)
 
     img = np.zeros((500,700,3), np.uint8)
-    if a == 1:
+    if a == 2:
         for cnt in contours:
             if len(cnt[0][0]) > 1:
                 x = int(cnt[0][0][0])
