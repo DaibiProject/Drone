@@ -24,7 +24,17 @@ while True:
     cv2.imshow("Frame2", mask)
     cv2.imshow("Frame3", mask3)
     
-    
+    img = np.zeros((700,1024,3), np.uint8)
+
+    for cnt in contours:
+        
+        if len(cnt[0][0]) > 1:
+            x = int(cnt[0][0][0])
+            y = int(cnt[0][0][1])
+            cv2.circle(img, (x,y), 1, (0,0,255), 2)
+            cv2.imshow("test",img)
+
+    cv2.imshow("test",img)
     fps=cv2.getTickFrequency()/(cv2.getTickCount()-tickmark)
     cv2.putText(frame, "FPS: {:05.2f}".format(fps), (10, 30), cv2.FONT_HERSHEY_PLAIN, 2, (255, 0, 0), 2)
     cv2.imshow('video', frame)
@@ -38,7 +48,7 @@ cv2.destroyAllWindows()
 
 #should display contour point.
 
-img = np.zeros((700,1024,3), np.uint8)
+
 
 for cnt in contours:
     
