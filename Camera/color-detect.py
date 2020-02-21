@@ -17,12 +17,17 @@ while True:
     low_d = np.array([94, 120, 80])
     high_d = np.array([126, 255, 255])
     mask2 = cv2.inRange(hsv_frame, low_d, high_d)
-    
-    contours, hierarchy = cv2.findContours(mask2,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
-    mask3 = cv2.drawContours(mask2, contours, -1, (0,255,0), 1, 8, hierarchy)
+
+    ret, thresh = cv2.threshold(mask2, 200, 255, 0)
+    contours, hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_NONE)
+    try:
+        cv2.drawContours(frame, contours, -1, (0,255,0), 3)
+    except cv2.error:
+        print ("err")
+        mask3 = mask2
     #display Masks
-    cv2.imshow("Frame2", mask)
-    cv2.imshow("Frame3", mask3)
+    #cv2.imshow("Frame2", mask)
+    cv2.imshow("Frame3", mask2)
     
     img = np.zeros((700,1024,3), np.uint8)
 
