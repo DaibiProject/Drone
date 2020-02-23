@@ -28,10 +28,10 @@ while True:
 
     #Contour finding and display
     contours, hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_NONE)
+    biggest_contours = sorted(contours, key=cv2.contourArea)[-5:]
     if a==1 or a==2:
-        biggest_contour = sorted(contours, key=cv2.contourArea)[-1:]
         try:
-            cv2.drawContours(frame, biggest_contour, -1, (0,255,0), 3)
+            cv2.drawContours(frame, biggest_contours, -1, (0,255,0), 3)
         except cv2.error:
             print ("err")
 
@@ -57,8 +57,16 @@ while True:
                 cv2.imshow("test",img)
                 
             
+    for b_cnt in biggest_contours:
+        approx = cv2.approxPolyDP(b_cnt, 0.01*cv2.arcLength(b_cnt, True), True)
+        x1 = approx.ravel()[0]
+        y1 = approx.ravel()[1]
+
+        if len(approx) > 50:
+            cv2.putText(frame, "Circle", (x1,y1), 1, 1, (0))
 
 
+    
     #Display Masks
     cv2.imshow("Frame3", mask2)
   
