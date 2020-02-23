@@ -28,9 +28,10 @@ while True:
 
     #Contour finding and display
     contours, hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_NONE)
-    if a==1:
+    if a==1 or a==2:
+        biggest_contour = sorted(contours, key=cv2.contourArea)[-1:]
         try:
-            cv2.drawContours(frame, contours, -1, (0,255,0), 3)
+            cv2.drawContours(frame, biggest_contour, -1, (0,255,0), 3)
         except cv2.error:
             print ("err")
 
@@ -52,7 +53,9 @@ while True:
                 x = int(cnt[0][0][0])
                 y = int(cnt[0][0][1])
                 cv2.circle(img, (x,y), 1, (0,0,255), 2)
+
                 cv2.imshow("test",img)
+                
             
 
 
@@ -76,7 +79,6 @@ cv2.destroyAllWindows()
 for cnt in contours:
     
     if len(cnt[0][0]) > 1:
-        print( cnt[0][0][0], cnt[0][0][1])
         x = int(cnt[0][0][0])
         y = int(cnt[0][0][1])
         cv2.circle(img, (x,y), 1, (0,0,255), 2)
