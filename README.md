@@ -12,3 +12,4 @@ Le cadre choisi est celui d’une personne habitant dans une montagne ou en haut
 ## Credits
 Thanks to : 
 * [@fdivitto](https://github.com/fdivitto) for [Arduino MSP](https://github.com/fdivitto/MSP)
+* [@opencv](https://github.com/opencv/) for their multiple libraries
