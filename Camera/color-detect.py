@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import math
 
 cap = cv2.VideoCapture(0)
 a = 0
@@ -68,6 +69,11 @@ while True:
             #print(area)
             if round(circleArea) > (round(area)-600) and round(circleArea) < (round(area)+600):
                 cv2.drawContours(frame, [b_cnt], 0, (0, 0, 255), -1)
+
+                e = ((1280*4.3)/(radius*2))/(2*math.tan(48.5/2))
+                print(e)
+
+            
                 
 
 
