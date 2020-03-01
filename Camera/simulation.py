@@ -5,6 +5,8 @@ img = np.zeros((500,700,3), np.uint8)
 
 x=0
 y=0
+m=0
+p=0
 
 
 while True:
@@ -40,8 +42,15 @@ while True:
     cv2.circle(img, (x,y), 1, (0,0,255), 2)
     cv2.circle(img, (200,200), 16, (0,255,0), 2)
 
+    cv2.line(img, (200,200), (200+10,int(200 + 10*m)), (0,0,0), 1)
+    
+    a = (200-y)/(200-x)
+    m = -1/a
+    p = y-m*x
 
-
+    cv2.line(img, (200,200), (200+10,int(200 + 10*m)), (0,255,0), 1)
+    
+    print(x+1)
     cv2.line(img, (200,200), (int(x),int(y)), (255,0,0), 1)
     fps=cv2.getTickFrequency()/(cv2.getTickCount()-tickmark)
     cv2.putText(img, "FPS: {:05.2f}".format(fps), (10, 30), cv2.FONT_HERSHEY_PLAIN, 2, (255, 0, 0), 2)
