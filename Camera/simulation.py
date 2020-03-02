@@ -22,22 +22,22 @@ while True:
     if key == 122:
         cv2.circle(img, (int(x),int(y)), 1, (0,0,0), 2)
         cv2.line(img, (200,200), (int(x),int(y)), (0,0,0), 1)
-        y-=2
+        y-=3
         
     if key== 115:
         cv2.circle(img, (int(x),int(y)), 1, (0,0,0), 2)
         cv2.line(img, (200,200), (int(x),int(y)), (0,0,0), 1)
-        y+=2
+        y+=3
         
     if key == 113:
         cv2.circle(img, (int(x),int(y)), 1, (0,0,0), 2)
         cv2.line(img, (200,200), (int(x),int(y)), (0,0,0), 1)
-        x-=2
+        x-=3
 
     if key == 100:
         cv2.circle(img, (int(x),int(y)), 1, (0,0,0), 2)
         cv2.line(img, (200,200), (int(x),int(y)), (0,0,0), 1)
-        x+=2
+        x+=3
 
     if key == 97:
         print(fps)
@@ -48,8 +48,7 @@ while True:
     cv2.line(img, (200,200), (200-int(xx),200-int(yy)), (0,0,0), 1)
 
     
-    
-    print(xx)
+
     a = (200-y)/(200-x)
     m = -1/a
     p = y-m*x
