@@ -26,14 +26,14 @@ void ulSensor() {
   long measure_left       =   pulseIn(ECHO_ULSL, HIGH, MEASURE_TIMEOUT);
   long measure_back       =   pulseIn(ECHO_ULSB, HIGH, MEASURE_TIMEOUT);
   long measure_right      =   pulseIn(ECHO_ULSR, HIGH, MEASURE_TIMEOUT);
-  long measure_ground       =   pulseIn(ECHO_ULSG, HIGH, MEASURE_TIMEOUT);
+  long measure_ground     =   pulseIn(ECHO_ULSG, HIGH, MEASURE_TIMEOUT);
   
   /* Calcul la distance à partir du temps mesuré */
   float d_front           =   measure_front / 2.0 * SOUND_SPEED;
   float d_left            =   measure_left / 2.0 * SOUND_SPEED;
   float d_back            =   measure_back / 2.0 * SOUND_SPEED;
   float d_right           =   measure_right / 2.0 * SOUND_SPEED;
-  float d_ground            =   measure_ground / 2.0 * SOUND_SPEED;
+  float d_ground          =   measure_ground / 2.0 * SOUND_SPEED;
   
   /* Affiche les résultats en mm, cm et m */
   //  Serial.print(F("Distance: "));
@@ -86,7 +86,7 @@ void ulSensor() {
   if (d_ground < 10) {
     LVL_GROUND = 3;
   } else if (d_ground < 15) {
-    LVL_RIGHT = 2;
+    LVL_GROUND = 2;
   } else if (d_ground < 20) {
     LVL_GROUND = 1;
   } else {
