@@ -2,10 +2,24 @@ import cv2
 import numpy as np
 import math
 
+
 cap = cv2.VideoCapture(0)
 a = 0
 
+i = 0
+
+moy = 0
+
+tab = [0.0,0.0,0.0,0.0,0.0]
 ouv = math.tan(48.5/2)
+jj = 0
+
+xx = 0
+
+xy = []
+gr1 = []
+gr2 = []
+
 while True:
 
     #Key
@@ -31,7 +45,7 @@ while True:
 
     #Contour finding and display
     contours, hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_NONE)
-    biggest_contours = sorted(contours, key=cv2.contourArea)[-1:]
+    biggest_contours = sorted(contours, key=cv2.contourArea)[-3:]   
     if a==1 or a==2:
         try:
             cv2.drawContours(frame, biggest_contours, -1, (0,255,0), 3)
@@ -66,15 +80,34 @@ while True:
         if len(approx) == 8:
             area = cv2.contourArea(b_cnt)
             (cx, cy), radius = cv2.minEnclosingCircle(b_cnt)
+            cv2.circle(frame, (int(cx),int(cy)), int(radius), (0,0,150), -1)
             circleArea = radius * radius * np.pi
-            #print(circleArea)
-            #print(area)
-            if round(circleArea) > (round(area)-600) and round(circleArea) < (round(area)+600):
-                cv2.drawContours(frame, [b_cnt], 0, (0, 0, 255), -1)
-
+            
+            if round(circleArea) > (round(area)-(radius * 20)) and round(circleArea) < (round(area)+(radius * 20)):
+                #cv2.drawContours(frame, [b_cnt], 0, (0, 0, 255), -1)
+                cv2.circle(frame, (int(cx),int(cy)), int(radius), (150,0,150), 3)
                 e = ((1280*4.3)/(radius*2))/(2*ouv)
-                print(e)
+               
 
+                tab[i]= e
+                if e <= - 25:
+                    print(7,5/10*e)
+                    e = e - (7.5/10*((1280*4.3)/(radius*2))/(2*ouv))
+                i += 1
+
+                if i == 5:
+                    i = 0
+                    for j in tab:
+                        moy = moy + j
+                    moy = moy/len(tab)
+                    print(moy)
+
+                    
+
+
+                
+
+                  
             
                 
 
@@ -91,7 +124,7 @@ while True:
     cv2.putText(frame, "FPS: {:05.2f}".format(fps), (10, 30), cv2.FONT_HERSHEY_PLAIN, 2, (255, 0, 0), 2)
     cv2.imshow('video', frame)
 
-   
+
 
 
 cap.release()
