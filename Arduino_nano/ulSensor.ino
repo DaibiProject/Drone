@@ -16,30 +16,36 @@ void ulSensor() {
     digitalWrite(TRIGGER_ULSR, HIGH);
     delayMicroseconds(10);
     digitalWrite(TRIGGER_ULSR, LOW);
-  
+  // Droite
+    digitalWrite(TRIGGER_ULSG, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(TRIGGER_ULSG, LOW);
+    
   /* Mesure le temps entre l'envoi de l'impulsion ultrasonique et son écho (si il existe) */
-  long measure_front = pulseIn(ECHO_ULSF, HIGH, MEASURE_TIMEOUT);
-  long measure_left = pulseIn(ECHO_ULSL, HIGH, MEASURE_TIMEOUT);
-  long measure_back = pulseIn(ECHO_ULSB, HIGH, MEASURE_TIMEOUT);
-  long measure_right = pulseIn(ECHO_ULSR, HIGH, MEASURE_TIMEOUT);
+  long measure_front      =   pulseIn(ECHO_ULSF, HIGH, MEASURE_TIMEOUT);
+  long measure_left       =   pulseIn(ECHO_ULSL, HIGH, MEASURE_TIMEOUT);
+  long measure_back       =   pulseIn(ECHO_ULSB, HIGH, MEASURE_TIMEOUT);
+  long measure_right      =   pulseIn(ECHO_ULSR, HIGH, MEASURE_TIMEOUT);
+  long measure_ground     =   pulseIn(ECHO_ULSG, HIGH, MEASURE_TIMEOUT);
   
   /* Calcul la distance à partir du temps mesuré */
-  float d_front = measure_front / 2.0 * SOUND_SPEED;
-  float d_left = measure_left / 2.0 * SOUND_SPEED;
-  float d_back = measure_back / 2.0 * SOUND_SPEED;
-  float d_right = measure_right / 2.0 * SOUND_SPEED;
+  float d_front           =   measure_front / 2.0 * SOUND_SPEED;
+  float d_left            =   measure_left / 2.0 * SOUND_SPEED;
+  float d_back            =   measure_back / 2.0 * SOUND_SPEED;
+  float d_right           =   measure_right / 2.0 * SOUND_SPEED;
+  float d_ground          =   measure_ground / 2.0 * SOUND_SPEED;
   
   /* Affiche les résultats en mm, cm et m */
-  //Serial.print(F("Distance: "));
-  //Serial.print(distance_mm);
-  //Serial.print(F("mm ("));
-  //Serial.print(distance_mm / 10.0, 2);
-  //Serial.print(F("cm, "));
-  //Serial.print(distance_mm / 1000.0, 2);
-  //Serial.println(F("m)"));
+  //  Serial.print(F("Distance: "));
+  //  Serial.print(distance_mm);
+  //  Serial.print(F("mm ("));
+  //  Serial.print(distance_mm / 10.0, 2);
+  //  Serial.print(F("cm, "));
+  //  Serial.print(distance_mm / 1000.0, 2);
+  //  Serial.println(F("m)"));
    
   /* Délai d'attente pour éviter d'afficher trop de résultats à la seconde */
-  //delay(500);
+  //  delay(500);
 
   if (d_front < 10) {
     LVL_FRONT = 3;
@@ -76,6 +82,15 @@ void ulSensor() {
     LVL_RIGHT = 1;
   } else {
     LVL_RIGHT = 0;
+  }
+  if (d_ground < 10) {
+    LVL_GROUND = 3;
+  } else if (d_ground < 15) {
+    LVL_GROUND = 2;
+  } else if (d_ground < 20) {
+    LVL_GROUND = 1;
+  } else {
+    LVL_GROUND = 0;
   }
   
 }

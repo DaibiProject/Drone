@@ -12,4 +12,7 @@ void ulSetup() {
   pinMode(TRIGGER_ULSR, OUTPUT);
   digitalWrite(TRIGGER_ULSR, LOW);
   pinMode(ECHO_ULSR, INPUT);
+  pinMode(TRIGGER_ULSG, OUTPUT);
+  digitalWrite(TRIGGER_ULSG, LOW);
+  pinMode(ECHO_ULSG, INPUT);
 }
