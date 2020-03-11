@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 import math
-
+from math import sqrt
 
 cap = cv2.VideoCapture(0)
 a = 0
@@ -20,6 +20,8 @@ xy = []
 gr1 = []
 gr2 = []
 
+centre = [0,0]
+
 while True:
 
     #Key
@@ -31,12 +33,14 @@ while True:
     #Video reading and conversion to HSV
     _, frame = cap.read()
     hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+    #cv2.circle(frame, (200,200), 3, (255,255,255),3)
+    #print(hsv_frame[200,200])
 
     #First part of FPS display
     tickmark=cv2.getTickCount()
     
     #Wanted color (HSV form)
-    low_d = np.array([94, 120, 80])
+    low_d = np.array([94, 80, 2])
     high_d = np.array([126, 255, 255])
     mask2 = cv2.inRange(hsv_frame, low_d, high_d)
 
@@ -86,21 +90,16 @@ while True:
             if round(circleArea) > (round(area)-(radius * 20)) and round(circleArea) < (round(area)+(radius * 20)):
                 #cv2.drawContours(frame, [b_cnt], 0, (0, 0, 255), -1)
                 cv2.circle(frame, (int(cx),int(cy)), int(radius), (150,0,150), 3)
-                e = ((1280*4.3)/(radius*2))/(2*ouv)
+                e = (1280/(2*ouv))
                
 
-                tab[i]= e
-                if e <= - 25:
-                    print(7,5/10*e)
-                    e = e - (7.5/10*((1280*4.3)/(radius*2))/(2*ouv))
-                i += 1
+                f = (sqrt((640-cx)*(640-cx)+(360-cy)*(360*cy)))
+                
+                r = sqrt(e*e+f*f)
+                r = r * 4.3/(radius*2)
 
-                if i == 5:
-                    i = 0
-                    for j in tab:
-                        moy = moy + j
-                    moy = moy/len(tab)
-                    print(moy)
+                print(e,f,r)
+                    
 
                     
 

@@ -1,20 +1,12 @@
 void mspCom() {
-  msp_rc_t rc;
   msp_attitude_t attitude;
   msp_raw_imu_t imu; 
   msp_altitude_t altitude;
+  msp_set_raw_rc_t rc;
 
-  if (msp.request(MSP_RC, &rc, sizeof(rc))) {
-    uint16_t roll     = rc.channelValue[0];
-    uint16_t pitch    = rc.channelValue[1];
-    uint16_t yaw      = rc.channelValue[2];
-    uint16_t throttle = rc.channelValue[3];
-    Serial.println("RC-Roll: " + String(roll));
-    Serial.println("RC-Pitch: " + String(pitch));
-    Serial.println("RC-Throttle: " + String(throttle));
-    Serial.println("RC-Yaw: " + String(yaw));
-  }
-  
+  msp.command(MSP_SET_RAW_RC, &rc, sizeof(rc), false);
+
+  /*
   if (msp.request(MSP_ATTITUDE, &attitude, sizeof(attitude))) {
     int16_t roll     = attitude.roll;
     int16_t pitch    = attitude.pitch;
@@ -23,6 +15,8 @@ void mspCom() {
     Serial.println("Att-Pitch: " + String(pitch/10.0));
     Serial.println("Att-Yaw: " + String(yaw));
   }
+  */
+  
   if (msp.request(MSP_RAW_IMU, &imu, sizeof(imu))) {
     uint16_t acc_x     = imu.acc[0];
     uint16_t acc_y     = imu.acc[1];
