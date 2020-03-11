@@ -16,7 +16,7 @@ void ulSensor() {
     digitalWrite(TRIGGER_ULSR, HIGH);
     delayMicroseconds(10);
     digitalWrite(TRIGGER_ULSR, LOW);
-  // Droite
+  // Ground
     digitalWrite(TRIGGER_ULSG, HIGH);
     delayMicroseconds(10);
     digitalWrite(TRIGGER_ULSG, LOW);
