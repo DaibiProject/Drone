@@ -1,9 +1,9 @@
 void mspCom() {
-  msp_attitude_t attitude;
+  // msp_attitude_t attitude;
   msp_raw_imu_t imu; 
   msp_altitude_t altitude;
   msp_set_raw_rc_t rc;
-
+  
   msp.command(MSP_SET_RAW_RC, &rc, sizeof(rc), false);
 
   /*
