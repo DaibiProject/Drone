@@ -1,31 +1,30 @@
 void ulSensor() {
   /* Lance une mesure de distance en envoyant une impulsion HIGH de 10µs sur la broche TRIGGER */
-  // Devant
-    digitalWrite(TRIGGER_ULSF, HIGH);
-    delayMicroseconds(10);
-    digitalWrite(TRIGGER_ULSF, LOW);
-  // Gauche
-    digitalWrite(TRIGGER_ULSL, HIGH);
-    delayMicroseconds(10);
-    digitalWrite(TRIGGER_ULSL, LOW);
-  // Derriere
-    digitalWrite(TRIGGER_ULSB, HIGH);
-    delayMicroseconds(10);
-    digitalWrite(TRIGGER_ULSB, LOW);
-  // Droite
-    digitalWrite(TRIGGER_ULSR, HIGH);
-    delayMicroseconds(10);
-    digitalWrite(TRIGGER_ULSR, LOW);
-  // Ground
-    digitalWrite(TRIGGER_ULSG, HIGH);
-    delayMicroseconds(10);
-    digitalWrite(TRIGGER_ULSG, LOW);
-    
   /* Mesure le temps entre l'envoi de l'impulsion ultrasonique et son écho (si il existe) */
+  // Devant
+  digitalWrite(TRIGGER_ULSF, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIGGER_ULSF, LOW);
   long measure_front      =   pulseIn(ECHO_ULSF, HIGH, MEASURE_TIMEOUT);
+  // Gauche
+  digitalWrite(TRIGGER_ULSL, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIGGER_ULSL, LOW);
   long measure_left       =   pulseIn(ECHO_ULSL, HIGH, MEASURE_TIMEOUT);
+  // Derriere
+  digitalWrite(TRIGGER_ULSB, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIGGER_ULSB, LOW);
   long measure_back       =   pulseIn(ECHO_ULSB, HIGH, MEASURE_TIMEOUT);
+  // Droite
+  digitalWrite(TRIGGER_ULSR, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIGGER_ULSR, LOW);
   long measure_right      =   pulseIn(ECHO_ULSR, HIGH, MEASURE_TIMEOUT);
+  // Ground
+  digitalWrite(TRIGGER_ULSG, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIGGER_ULSG, LOW);
   long measure_ground     =   pulseIn(ECHO_ULSG, HIGH, MEASURE_TIMEOUT);
   
   /* Calcul la distance à partir du temps mesuré */
@@ -34,6 +33,8 @@ void ulSensor() {
   float d_back            =   measure_back / 2.0 * SOUND_SPEED;
   float d_right           =   measure_right / 2.0 * SOUND_SPEED;
   float d_ground          =   measure_ground / 2.0 * SOUND_SPEED;
+
+  delayMicroseconds(50);
   
   /* Affiche les résultats en mm, cm et m */
   //  Serial.print(F("Distance: "));
