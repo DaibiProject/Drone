@@ -93,12 +93,12 @@ while True:
 
                 dist_to_center = abs((720*(4.3/radius))/(2*ouv))
 
-                dist_center_sphere = abs(cy-360)*(4.3/radius)
+                dist_center_sphere_y = abs(cy-240)*(4.3/radius)
+                dist_center_sphere_x = abs(cx-340)*(4.3/radius)
 
-                dist = sqrt(dist_to_center**2 + dist_center_sphere**2)
+                dist = sqrt(dist_to_center**2 + dist_center_sphere_y**2+ dist_center_sphere_x**2)
                 
-                print(radius, dist_to_center,dist_center_sphere,dist)
-
+                print(radius, dist_to_center,dist_center_sphere_x,dist)
                     
 
 
