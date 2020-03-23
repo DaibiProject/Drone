@@ -91,7 +91,13 @@ while True:
                 #cv2.drawContours(frame, [b_cnt], 0, (0, 0, 255), -1)
                 cv2.circle(frame, (int(cx),int(cy)), int(radius), (150,0,150), 3)
 
-                dist = sqrt(((720*radius/4.3)/(2*ouv))**2+((radius/4.3)*abs(cy-360))**2)
+                dist_to_center = abs((720*(radius/4.3))/(2*ouv))
+
+                dist_center_sphere = abs(cy-360)*(radius/4.3)
+
+                dist = sqrt(dist_to_center**2 + dist_center_sphere**2)
+                
+                print(dist_to_center,dist_center_sphere,dist)
 
                     
 
