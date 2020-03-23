@@ -90,8 +90,16 @@ while True:
             if round(circleArea) > (round(area)-(radius * 20)) and round(circleArea) < (round(area)+(radius * 20)):
                 #cv2.drawContours(frame, [b_cnt], 0, (0, 0, 255), -1)
                 cv2.circle(frame, (int(cx),int(cy)), int(radius), (150,0,150), 3)
+                e = (1280/(2*ouv))
+               
 
-                dist = sqrt(((720*radius/4.3)/(2*ouv))**2+((radius/4.3)*abs(cy-360))**2)
+                f = (sqrt((640-cx)*(640-cx)+(360-cy)*(360*cy)))
+                
+                r = sqrt(e*e+f*f)
+                r = r * 4.3/(radius*2)
+
+                print(e,f,r)
+                    
 
                     
 
