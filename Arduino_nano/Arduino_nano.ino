@@ -1,12 +1,18 @@
 #include <SoftwareSerial.h>
 #include "MSP.h"
-#include <AES.h>
-#include "./printf.h"
-#include <SPI.h> 
-#include <nRF24L01.h> 
-#include <RF24.h> 
+#include <AESLib.h>
+#include <SPI.h>
+#include <printf.h>
+#include <nRF24L01.h>
+#include <RF24_config.h>
+#include <RF24.h>
+#include <LowPower.h>
 AES aes;
 MSP msp;
+
+//nRF24L01
+#define CE_PIN 13
+#define CSN_PIN 14
 
 // CAPTEURS ULTRASON
 /* Constantes pour les broches */
@@ -41,15 +47,15 @@ byte LVL_GROUND;                   // Niveau de distance du capteur du dessous
 SoftwareSerial mspSerial(1, 2);
 
 // AES
-unsigned int keyLength [1] = {128};                                 // Taille de la clé 
+// unsigned int keyLength [1] = {128};
 byte *key = (unsigned char*)"DbItbDotw200";                         // Clé de cryptage
 byte plain[] = "Open";                                              // Message a encrypter 
-byte iv [N_BLOCK] ;
-unsigned long long int myIv = 36753562;                             // Vecteur d'initialisation
+// byte iv [N_BLOCK] ;
+// unsigned long long int myIv = 36753562;                          // Vecteur d'initialisation
 
 // RADIO - NRF24L01
-RF24 radio(13, 14);
-const byte addresses[][6] = {"00001", "00002", "00003", "00004"};
+RF24 radio(CE_PIN,CSN_PIN);
+const byte addresses[4] = {"03499", "02989", "51914", "44204"};
 
 
 void setup() {
@@ -61,10 +67,15 @@ void setup() {
   msp.begin(mspSerial);
   delayMicroseconds(10);
   /* Initialisation radio */
-  radio.begin(); 
-  radio.openWritingPipe(addresses[0]);                              // 00002 
-  radio.openReadingPipe(1, addresses[1]);                           // 00001 
-  radio.setPALevel(RF24_PA_MIN); 
+  radio.begin();
+  radio.setPALevel(RF24_PA_MIN);
+  radio.setChannel(100);
+  radio.setDataRate(RF24_1MBPS);
+  radio.setAutoAck(0);
+  radio.enableDynamicPayloads();
+  radio.openWritingPipe(addresses[0]);                              // 03499 
+  radio.openReadingPipe(1, addresses[1]);                           // 02989 
+  radio.printDetails();
   delayMicroseconds(10);
   /* Initialisation de printf pour l'AES */
   printf_begin();
