@@ -57,6 +57,10 @@ byte plain[] = "Open";                                              // Message a
 RF24 radio(CE_PIN,CSN_PIN);
 const byte addresses[4] = {"03499", "02989", "51914", "44204"};
 
+uint16_t roll;
+uint16_t pitch;
+uint16_t yaw;
+uint16_t throttle;
 
 void setup() {
   /* Initialisation du port série */

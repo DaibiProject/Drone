@@ -1,4 +1,4 @@
-void mspCom() {
+void mspCom(roll, pitch, yaw, throttle) {
   // msp_attitude_t attitude;
   msp_raw_imu_t imu; 
   msp_altitude_t altitude;
@@ -32,11 +32,11 @@ void mspCom() {
   Serial.println("Magnetometer[x,y,z]: " + String(mag_x)+ ","+ String(mag_y) +","+ String(mag_z));
   }
   if (msp.request(MSP_ALTITUDE, &altitude, sizeof(altitude))) {
-    int32_t alt_est  = altitude.estimatedActualPosition;  // cm
-    int16_t vel_est  = altitude.estimatedActualVelocity;  // cm/s
+    // int32_t alt_est  = altitude.estimatedActualPosition;  // cm
+    // int16_t vel_est  = altitude.estimatedActualVelocity;  // cm/s
     int32_t bara_alt = altitude.baroLatestAltitude;
-    Serial.println("Estimated altitude: " + String(alt_est));
-    Serial.println("Estimated Velocity: " + String(vel_est));
+    // Serial.println("Estimated altitude: " + String(alt_est));
+    // Serial.println("Estimated Velocity: " + String(vel_est));
     Serial.println("Barometer altitude: " + String(bara_alt));
   }
 }
