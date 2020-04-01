@@ -10,14 +10,15 @@ p=0
 xx=0
 yy=0
 rayon=0
+dist=0
 while True:
     tickmark=cv2.getTickCount()
     key = cv2.waitKey(1)
     if key == 27:
         break
     cv2.line(img, (int(x),int(y)), (int(xx)+200, int(yy)+200), (0,0,0), 1)
-    cv2.line(iqmg, (int(x),int(y)), (-int(xx)+200, -int(yy)+200), (0,0,0), 1)
-    cv2.circle(img, (int(x),int(y)), int(rayon), (0,0,0), -1)
+    cv2.line(img, (int(x),int(y)), (-int(xx)+200, -int(yy)+200), (0,0,0), 1)
+    cv2.circle(img, (int(x),int(y)), int(rayon), (0,0,0), 1)
     #if key != -1:
     #   print(key)
     if key == 122:
@@ -60,10 +61,10 @@ while True:
     yy = 16*math.sin(math.atan(m))
 
     dist = math.sqrt((200-x)**2+(200-y)**2)
-    
-    rayon = 1.1825**(0.0378*dist)
-    print(rayon, int(rayon))
-    cv2.circle(img, (int(x),int(y)), int(rayon), (0,0,255), -1)
+    dist=dist/4
+    rayon = 1.1825*math.exp(0.0378*dist)
+    print(rayon, dist)
+    cv2.circle(img, (int(x),int(y)), int(rayon), (0,0,255), 1)
     
     
     
