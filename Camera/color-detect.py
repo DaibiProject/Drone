@@ -3,24 +3,13 @@ import numpy as np
 import math
 from math import sqrt
 
+#Variable statement 
 cap = cv2.VideoCapture(0)
 a = 0
-
-i = 0
-
 moy = 0
-
 tab = [0.0,0.0,0.0,0.0,0.0]
 ouv = math.tan(48.5/2)
-jj = 0
 
-xx = 0
-
-xy = []
-gr1 = []
-gr2 = []
-
-centre = [0,0]
 
 while True:
 
@@ -33,9 +22,7 @@ while True:
     #Video reading and conversion to HSV
     _, frame = cap.read()
     hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-    #cv2.circle(frame, (200,200), 3, (255,255,255),3)
-    #print(hsv_frame[200,200])
-
+    
     #First part of FPS display
     tickmark=cv2.getTickCount()
     
@@ -67,6 +54,7 @@ while True:
             a = 0
         print(a)
 
+    #contour
     img = np.zeros((500,700,3), np.uint8)
     if a == 2:
         for cnt in contours:
@@ -77,18 +65,19 @@ while True:
 
                 cv2.imshow("test",img)
                 
-            
+    #biggest contour    
     for b_cnt in biggest_contours:
         approx = cv2.approxPolyDP(b_cnt, .03 * cv2.arcLength(b_cnt, True), True)
 
+        #if looks like circle
         if len(approx) == 8:
             area = cv2.contourArea(b_cnt)
             (cx, cy), radius = cv2.minEnclosingCircle(b_cnt)
             cv2.circle(frame, (int(cx),int(cy)), int(radius), (0,0,150), -1)
             circleArea = radius * radius * np.pi
-            
+
+            #then compare to a circle area
             if round(circleArea) > (round(area)-(radius * 20)) and round(circleArea) < (round(area)+(radius * 20)):
-                #cv2.drawContours(frame, [b_cnt], 0, (0, 0, 255), -1)
                 cv2.circle(frame, (int(cx),int(cy)), int(radius), (150,0,150), 3)
 
                 dist_to_center = abs((720*(4.3/radius))/(2*ouv))
@@ -96,10 +85,13 @@ while True:
                 dist_center_sphere_y = abs(cy-240)*(4.3/radius)
                 dist_center_sphere_x = abs(cx-340)*(4.3/radius)
 
+                #Distance correction (using cheat function)
                 dist = sqrt(dist_to_center**2 + dist_center_sphere_y**2+ dist_center_sphere_x**2)
                 rayon = 0.0012*(dist**2)+ 0.1497*dist - 2.3407
                 dist1 = dist - rayon
-                print(rayon,dist, dist1)
+
+                if a == 2 or a == 1:
+                    print(rayon,dist, dist1)
                     
 
 
