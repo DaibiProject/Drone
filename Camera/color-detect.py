@@ -97,8 +97,9 @@ while True:
                 dist_center_sphere_x = abs(cx-340)*(4.3/radius)
 
                 dist = sqrt(dist_to_center**2 + dist_center_sphere_y**2+ dist_center_sphere_x**2)
-                
-                print(radius, dist_to_center,dist_center_sphere_x,dist)
+                rayon = 0.0012*(dist**2)+ 0.1497*dist - 2.3407
+                dist1 = dist - rayon
+                print(rayon,dist, dist1)
                     
 
 

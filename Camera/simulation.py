@@ -61,8 +61,8 @@ while True:
     yy = 16*math.sin(math.atan(m))
 
     dist = math.sqrt((200-x)**2+(200-y)**2)
-    dist=dist/4
-    rayon = 1.1825*math.exp(0.0378*dist)
+    dist=dist/2
+    rayon = 0.0012*(dist**2)+ 0.1497*dist - 2.3407
     print(rayon, dist)
     cv2.circle(img, (int(x),int(y)), int(rayon), (0,0,255), 1)
     
