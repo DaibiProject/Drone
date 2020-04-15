@@ -12,14 +12,23 @@ yy=0
 rayon=0
 dist=0
 
+
+obst= []
 def mouse_drawing(event, x, y, flags, params):
+    global obst
+    
     if event == cv2.EVENT_LBUTTONDOWN:
-        x1 = x
-        y1 = y
         cv2.circle(img, (int(x), int(y)), 7, (255,255,255), 1)
+        obst.append([x,y])
+        
+        
+
+    
+    
         
 
 while True:
+    print(obst)
     tickmark=cv2.getTickCount()
     key = cv2.waitKey(1)
     if key == 27:
@@ -74,12 +83,19 @@ while True:
     cv2.circle(img, (int(x),int(y)), int(rayon), (0,0,255), 1)
     
     
+    
     cv2.line(img, (int(x),int(y)), (int(xx)+200, int(yy)+200), (0,200,0), 1)
     cv2.line(img, (int(x),int(y)), (-int(xx)+200, -int(yy)+200), (0,200,0), 1)
     
     cv2.line(img, (200,200), (int(xx)+200,int(yy)+200), (0,100,100), 1)
     cv2.line(img, (200,200), (200-int(xx),200-int(yy)), (0,100,100), 1)
     cv2.line(img, (200,200), (int(x),int(y)), (255,0,0), 1)
+
+    for i in obst:
+        cv2.circle(img, (int(i[0]),int(i[1])), 7, (255,255,255), 1)
+
+
+    
     fps=cv2.getTickFrequency()/(cv2.getTickCount()-tickmark)
     cv2.putText(img, "FPS: {:05.2f}".format(fps), (10, 30), cv2.FONT_HERSHEY_PLAIN, 2, (255, 0, 0), 2)
     cv2.imshow("simu",img)
