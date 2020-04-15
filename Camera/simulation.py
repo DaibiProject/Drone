@@ -11,6 +11,14 @@ xx=0
 yy=0
 rayon=0
 dist=0
+
+def mouse_drawing(event, x, y, flags, params):
+    if event == cv2.EVENT_LBUTTONDOWN:
+        x1 = x
+        y1 = y
+        cv2.circle(img, (int(x), int(y)), 7, (255,255,255), 1)
+        
+
 while True:
     tickmark=cv2.getTickCount()
     key = cv2.waitKey(1)
@@ -63,9 +71,7 @@ while True:
     dist = math.sqrt((200-x)**2+(200-y)**2)
     dist=dist/2
     rayon = 0.0012*(dist**2)+ 0.1497*dist - 2.3407
-    print(rayon, dist)
     cv2.circle(img, (int(x),int(y)), int(rayon), (0,0,255), 1)
-    
     
     
     cv2.line(img, (int(x),int(y)), (int(xx)+200, int(yy)+200), (0,200,0), 1)
@@ -78,6 +84,8 @@ while True:
     cv2.putText(img, "FPS: {:05.2f}".format(fps), (10, 30), cv2.FONT_HERSHEY_PLAIN, 2, (255, 0, 0), 2)
     cv2.imshow("simu",img)
     cv2.putText(img, "FPS: {:05.2f}".format(fps), (10, 30), cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 0), 2)
+    
+    cv2.setMouseCallback("simu", mouse_drawing)
     
 cv2.destroyAllWindows()
 

@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import math
 from math import sqrt
+#import smbus
 
 #Variable statement 
 cap = cv2.VideoCapture(0)
