@@ -11,8 +11,8 @@ xx=0
 yy=0
 rayon=0
 dist=0
-
-
+x1=0
+y1=0
 obst= []
 def mouse_drawing(event, x, y, flags, params):
     global obst
@@ -20,15 +20,9 @@ def mouse_drawing(event, x, y, flags, params):
     if event == cv2.EVENT_LBUTTONDOWN:
         cv2.circle(img, (int(x), int(y)), 7, (255,255,255), 1)
         obst.append([x,y])
-        
-        
 
-    
-    
-        
 
 while True:
-    print(obst)
     tickmark=cv2.getTickCount()
     key = cv2.waitKey(1)
     if key == 27:
@@ -38,6 +32,12 @@ while True:
     cv2.circle(img, (int(x),int(y)), int(rayon), (0,0,0), 1)
     #if key != -1:
     #   print(key)
+
+
+        
+    for i in obst:
+        cv2.line(img, (int(x),int(y)),(int(i[0]),int(i[1])), (0,0,0))
+    
     if key == 122:
         cv2.circle(img, (int(x),int(y)), 1, (0,0,0), 2)
         cv2.line(img, (200,200), (int(x),int(y)), (0,0,0), 1)
@@ -93,6 +93,8 @@ while True:
 
     for i in obst:
         cv2.circle(img, (int(i[0]),int(i[1])), 7, (255,255,255), 1)
+        cv2.line(img, (int(x),int(y)),(int(i[0]),int(i[1])), (100,100,100))
+        
 
 
     
