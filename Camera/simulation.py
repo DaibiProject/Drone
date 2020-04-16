@@ -73,7 +73,7 @@ while True:
     a = (200-y)/(200-x)
     m = -1/a
     p = y-m*x
-    
+
     xx = 16*math.cos(math.atan(m))
     yy = 16*math.sin(math.atan(m))
 
@@ -94,6 +94,16 @@ while True:
     for i in obst:
         cv2.circle(img, (int(i[0]),int(i[1])), 7, (255,255,255), 1)
         cv2.line(img, (int(x),int(y)),(int(i[0]),int(i[1])), (100,100,100))
+
+    i = 0
+    while i <900:
+        cv2.line(img, (int(i), 0), (int(i), 700), (30,30,30))
+        i+= 20
+    i = 0
+    while i < 700:
+        cv2.line(img, (0, int(i)), (900, int(i)), (30,30,30))
+        i+= 20
+        
         
 
 
