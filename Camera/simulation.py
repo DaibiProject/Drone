@@ -17,24 +17,31 @@ obst= []
 taille_case = 20
 cx = 0
 cy = 0
-
+incr = 0
 def mouse_drawing(event, x, y, flags, params):
     global obst
+    global incr
     
     if event == cv2.EVENT_LBUTTONDOWN:
         cv2.circle(img, (int(x), int(y)), 7, (255,255,255), 1)
-        obst.append([x,y])
+        obst.append(Obstacle())
+        obst[-1].set_value(x,y)
+        
+        
+        
 
 class Obstacle:
     global taille_case
     obst = []
     index = 0
+    
     def __init__(self):
         self.x=0
         self.y=0
-        self.index = index
-        index += 1
-        obst.append([x,y])
+        self.index = Obstacle.index
+        Obstacle.index += 1
+        Obstacle.obst.append([x,y])
+        
 
         
 
@@ -43,8 +50,15 @@ class Obstacle:
         self.y = yy
         self.x1 = xx/taille_case
         self.y1 = yy/taille_case
-        obst[self.index]=[self.x,self.y]
-    
+        Obstacle.obst[self.index]=[self.x,self.y]
+
+    def get_valuex(self):
+        
+        return self.x
+
+    def get_valuey(self):
+        
+        return self.y
 
 def fill_case(x,y,cx,cy,color):
    
@@ -80,9 +94,10 @@ while True:
 
         
     for i in obst:
-        cv2.line(img, (int(x),int(y)),(int(i[0]),int(i[1])), (0,0,0))
-        fill_case(i[0],i[1],(50,20,20))
-    fill_case(x,y,cx,cy,(20,20,40))
+        cv2.line(img, (int(x),int(y)),((i.get_valuex()),int(i.get_valuey())), (0,0,0))
+        fill_case(i.get_valuex(),i.get_valuey(), -100, -100,(50,20,20))
+    fill_case(x,y,cx,cy,(0,0,0))
+    
     if key == 122:
         cv2.circle(img, (int(x),int(y)), 1, (0,0,0), 2)
         cv2.line(img, (200,200), (int(x),int(y)), (0,0,0), 1)
@@ -103,6 +118,8 @@ while True:
         cv2.line(img, (200,200), (int(x),int(y)), (0,0,0), 1)
         x+=3
 
+    fill_case(x,y,cx,cy,(20,20,40))
+    
     if key == 97:
         print(fps)
     cv2.circle(img, (int(x),int(y)), 1, (0,0,255), 2)
@@ -137,8 +154,8 @@ while True:
     cv2.line(img, (200,200), (int(x),int(y)), (255,0,0), 1)
 
     for i in obst:
-        cv2.circle(img, (int(i[0]),int(i[1])), 7, (255,255,255), 1)
-        cv2.line(img, (int(x),int(y)),(int(i[0]),int(i[1])), (100,100,100))
+        cv2.circle(img, (int(i.get_valuex()),int(i.get_valuey())), 7, (255,255,255), 1)
+        cv2.line(img, (int(x),int(y)),(int(i.get_valuex()),int(i.get_valuey())), (100,100,100))
 
     
         
