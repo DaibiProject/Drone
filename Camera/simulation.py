@@ -20,18 +20,6 @@ taille_case = 20
 cx = 0
 cy = 0
 incr = 0
-def mouse_drawing(event, x, y, flags, params):
-    global obst
-    global incr
-    
-    if event == cv2.EVENT_LBUTTONDOWN:
-        if b==1 or b==2:
-            cv2.circle(img, (int(x), int(y)), 7, (255,255,255), 1)
-        obst.append(Obstacle())
-        obst[-1].set_value(x,y)
-        
-        
-        
 
 class Obstacle:
     global taille_case
@@ -56,12 +44,39 @@ class Obstacle:
         Obstacle.obst[self.index]=[self.x,self.y]
 
     def get_valuex(self):
-        
         return self.x
 
     def get_valuey(self):
-        
         return self.y
+
+
+class Snake(init,dest):
+
+    def __init__(self):
+        self.x = init[0]
+        self.y = init[1]
+        self.ax = dest[0]
+        self.ay = dest[1]
+
+    def move():
+        self.dir = ((self.ay-self.y)/(self.ax-self.x))
+        
+
+    
+
+def mouse_drawing(event, x, y, flags, params):
+    global obst
+    global incr
+    
+    if event == cv2.EVENT_LBUTTONDOWN:
+        if b==1 or b==2:
+            cv2.circle(img, (int(x), int(y)), 7, (255,255,255), 1)
+        obst.append(Obstacle())
+        obst[-1].set_value(x,y)
+        
+        
+        
+
 
 def fill_case(x,y,cx,cy,color):
    
@@ -70,6 +85,11 @@ def fill_case(x,y,cx,cy,color):
     cy = int(y/taille_case)*taille_case
     cv2.rectangle(img, (cx,cy),(cx+taille_case,cy+taille_case),color,-1)
     
+
+def find_color(x,y):
+    color = img[y,x]
+    print(color)
+    return color
 
 while True:
     tickmark=cv2.getTickCount()
@@ -134,7 +154,8 @@ while True:
 
         elif b == 2:
             b = 0
-        
+    if key == 9:
+        find_color(100,100)
 
     if b == 2:
         print(fps)
