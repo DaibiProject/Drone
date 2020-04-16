@@ -3,6 +3,8 @@ import numpy as np
 import math
 img = np.zeros((700,900,3), np.uint8)
 
+b = 0
+
 x=0.001
 y=0.001
 m=0
@@ -23,7 +25,8 @@ def mouse_drawing(event, x, y, flags, params):
     global incr
     
     if event == cv2.EVENT_LBUTTONDOWN:
-        cv2.circle(img, (int(x), int(y)), 7, (255,255,255), 1)
+        if b==1 or b==2:
+            cv2.circle(img, (int(x), int(y)), 7, (255,255,255), 1)
         obst.append(Obstacle())
         obst[-1].set_value(x,y)
         
@@ -94,7 +97,8 @@ while True:
 
         
     for i in obst:
-        cv2.line(img, (int(x),int(y)),((i.get_valuex()),int(i.get_valuey())), (0,0,0))
+        if b==1 or b==2:
+            cv2.line(img, (int(x),int(y)),((i.get_valuex()),int(i.get_valuey())), (0,0,0))
         fill_case(i.get_valuex(),i.get_valuey(), -100, -100,(50,20,20))
     fill_case(x,y,cx,cy,(0,0,0))
     
@@ -121,7 +125,20 @@ while True:
     fill_case(x,y,cx,cy,(20,20,40))
     
     if key == 97:
+        
+        if b == 1:
+            b = 2
+        
+        elif b == 0:
+            b = 1
+
+        elif b == 2:
+            b = 0
+        
+
+    if b == 2:
         print(fps)
+        print(obst)
     cv2.circle(img, (int(x),int(y)), 1, (0,0,255), 2)
     cv2.circle(img, (200,200), 16, (150,0,150), 2)
     
@@ -153,9 +170,10 @@ while True:
     cv2.line(img, (200,200), (200-int(xx),200-int(yy)), (0,100,100), 1)
     cv2.line(img, (200,200), (int(x),int(y)), (255,0,0), 1)
 
-    for i in obst:
-        cv2.circle(img, (int(i.get_valuex()),int(i.get_valuey())), 7, (255,255,255), 1)
-        cv2.line(img, (int(x),int(y)),(int(i.get_valuex()),int(i.get_valuey())), (100,100,100))
+    if b == 1 or b == 2:
+        for i in obst:
+            cv2.circle(img, (int(i.get_valuex()),int(i.get_valuey())), 7, (255,255,255), 1)
+            cv2.line(img, (int(x),int(y)),(int(i.get_valuex()),int(i.get_valuey())), (100,100,100))
 
     
         
