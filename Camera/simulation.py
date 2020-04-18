@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import math
 img = np.zeros((700,900,3), np.uint8)
-
+import time
 b = 0
 
 x=0.001
@@ -130,7 +130,8 @@ def astar(map_, start, end):
 
             # Create new node
             new_node = Node(current_node, node_position)
-
+            fill_case(node_position[0]*taille_case,node_position[1]*taille_case,-700,-700,(80,80,80))
+            
             # Append
             children.append(new_node)
 
@@ -144,7 +145,8 @@ def astar(map_, start, end):
 
             # Create the f, g, and h values
             child.g = current_node.g + 1
-            child.h = ((child.position[0] - end_node.position[0]) ** 2) + ((child.position[1] - end_node.position[1]) ** 2)
+            child.h = 0.0000001*((abs(child.position[0] - end_node.position[0])) + (abs(child.position[1] - end_node.position[1])))
+            print(child.h)
             child.f = child.g + child.h
 
             # Child is already in the open list
@@ -152,9 +154,9 @@ def astar(map_, start, end):
                 if child == open_node and child.g > open_node.g:
                     continue
 
-            # Add the child to the open list
+                # Add the child to the open list
             open_list.append(child)
-    
+        
 
 def mouse_drawing(event, x, y, flags, params):
     global obst
@@ -248,9 +250,9 @@ while True:
             b = 0
     if key == 9:
         find_color(100,100)
-        start = (0,0)
-        fill_case(400,400,-700,-700,(0,0,200))
-        end = (20,20)
+        start = (int(x/taille_case),int(y/taille_case))
+        end = (10,10)
+        print(map_)
         path = astar(map_,start,end)
         print(path)
         for i in path:
