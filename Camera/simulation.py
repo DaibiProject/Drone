@@ -20,8 +20,15 @@ taille_case = 20
 cx = 0
 cy = 0
 incr = 0
+map_ = []
+for i in range(int(700/taille_case)):
+    map_.append([0])
+    for y in range(int((900/taille_case))-1):
+        map_[i].append(0)
+
 
 class Obstacle:
+    global map_
     global taille_case
     obst = []
     index = 0
@@ -42,6 +49,8 @@ class Obstacle:
         self.x1 = xx/taille_case
         self.y1 = yy/taille_case
         Obstacle.obst[self.index]=[self.x,self.y]
+        map_[int(self.y1)][int(self.x1)] = 1
+        print(map_)
 
     def get_valuex(self):
         return self.x
@@ -49,19 +58,102 @@ class Obstacle:
     def get_valuey(self):
         return self.y
 
+class Node():
+    """A node class for A* Pathfinding"""
 
-class Snake(init,dest):
+    def __init__(self, parent=None, position=None):
+        self.parent = parent
+        self.position = position
 
-    def __init__(self):
-        self.x = init[0]
-        self.y = init[1]
-        self.ax = dest[0]
-        self.ay = dest[1]
+        self.g = 0
+        self.h = 0
+        self.f = 0
 
-    def move():
-        self.dir = ((self.ay-self.y)/(self.ax-self.x))
-        
+    def __eq__(self, other):
+        return self.position == other.position
 
+
+def astar(map_, start, end):
+    """Returns a list of tuples as a path from the given start to the given end in the given maze"""
+
+    # Create start and end node
+    start_node = Node(None, start)
+    start_node.g = start_node.h = start_node.f = 0
+    end_node = Node(None, end)
+    end_node.g = end_node.h = end_node.f = 0
+
+    # Initialize both open and closed list
+    open_list = []
+    closed_list = []
+
+    # Add the start node
+    open_list.append(start_node)
+
+    # Loop until you find the end
+    while len(open_list) > 0:
+
+        # Get the current node
+        current_node = open_list[0]
+        current_index = 0
+        for index, item in enumerate(open_list):
+            if item.f < current_node.f:
+                current_node = item
+                current_index = index
+
+        # Pop current off open list, add to closed list
+        open_list.pop(current_index)
+        closed_list.append(current_node)
+
+        # Found the goal
+        if current_node == end_node:
+            path = []
+            current = current_node
+            while current is not None:
+                path.append(current.position)
+                current = current.parent
+            return path[::-1] # Return reversed path
+
+        # Generate children
+        children = []
+        for new_position in [(0, -1), (0, 1), (-1, 0), (1, 0)]: # Adjacent squares
+
+            # Get node position
+            node_position = (current_node.position[0] + new_position[0], current_node.position[1] + new_position[1])
+
+            # Make sure within range
+            if node_position[0] > (len(map_) - 1) or node_position[0] < 0 or node_position[1] > (len(map_[len(map_)-1]) -1) or node_position[1] < 0:
+                continue
+
+            # Make sure walkable terrain
+            if map_[node_position[0]][node_position[1]] != 0:
+                continue
+
+            # Create new node
+            new_node = Node(current_node, node_position)
+
+            # Append
+            children.append(new_node)
+
+        # Loop through children
+        for child in children:
+
+            # Child is on the closed list
+            for closed_child in closed_list:
+                if child == closed_child:
+                    continue
+
+            # Create the f, g, and h values
+            child.g = current_node.g + 1
+            child.h = ((child.position[0] - end_node.position[0]) ** 2) + ((child.position[1] - end_node.position[1]) ** 2)
+            child.f = child.g + child.h
+
+            # Child is already in the open list
+            for open_node in open_list:
+                if child == open_node and child.g > open_node.g:
+                    continue
+
+            # Add the child to the open list
+            open_list.append(child)
     
 
 def mouse_drawing(event, x, y, flags, params):
@@ -156,6 +248,13 @@ while True:
             b = 0
     if key == 9:
         find_color(100,100)
+        start = (0,0)
+        fill_case(400,400,-700,-700,(0,0,200))
+        end = (20,20)
+        path = astar(map_,start,end)
+        print(path)
+        for i in path:
+            fill_case(i[0]*taille_case,i[1]*taille_case,-700,-700,(100,100,100))
 
     if b == 2:
         print(fps)
