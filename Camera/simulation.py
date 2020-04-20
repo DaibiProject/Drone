@@ -50,7 +50,6 @@ class Obstacle:
         self.y1 = yy/taille_case
         Obstacle.obst[self.index]=[self.x,self.y]
         map_[int(self.y1)][int(self.x1)] = 1
-        print(map_)
 
     def get_valuex(self):
         return self.x
@@ -75,7 +74,6 @@ class Node():
 
 def astar(map_, start, end):
     """Returns a list of tuples as a path from the given start to the given end in the given maze"""
-
     # Create start and end node
     start_node = Node(None, start)
     start_node.g = start_node.h = start_node.f = 0
@@ -88,9 +86,10 @@ def astar(map_, start, end):
 
     # Add the start node
     open_list.append(start_node)
-
+    
     # Loop until you find the end
     while len(open_list) > 0:
+        
 
         # Get the current node
         current_node = open_list[0]
@@ -99,7 +98,6 @@ def astar(map_, start, end):
             if item.f < current_node.f:
                 current_node = item
                 current_index = index
-
         # Pop current off open list, add to closed list
         open_list.pop(current_index)
         closed_list.append(current_node)
@@ -112,11 +110,9 @@ def astar(map_, start, end):
                 path.append(current.position)
                 current = current.parent
             return path[::-1] # Return reversed path
-
         # Generate children
         children = []
-        for new_position in [(0, -1), (0, 1), (-1, 0), (1, 0)]: # Adjacent squares
-
+        for new_position in [(0, -1), (0, 1), (-1, 0), (1, 0)]: # Adjacent square
             # Get node position
             node_position = (current_node.position[0] + new_position[0], current_node.position[1] + new_position[1])
 
@@ -125,13 +121,13 @@ def astar(map_, start, end):
                 continue
 
             # Make sure walkable terrain
-            if map_[node_position[0]][node_position[1]] != 0:
+            if map_[node_position[0]][node_position[1]] == 1:
                 continue
 
             # Create new node
             new_node = Node(current_node, node_position)
-            fill_case(node_position[0]*taille_case,node_position[1]*taille_case,-700,-700,(80,80,80))
-            
+            fill_case(node_position[1]*taille_case,node_position[0]*taille_case,-700,-700,(60,60,60))
+             
             # Append
             children.append(new_node)
 
@@ -145,10 +141,11 @@ def astar(map_, start, end):
 
             # Create the f, g, and h values
             child.g = current_node.g + 1
-            child.h = 0.0000001*((abs(child.position[0] - end_node.position[0])) + (abs(child.position[1] - end_node.position[1])))
-            print(child.h)
+            #child.h = ((child.position[0] - end_node.position[0])**2) + ((child.position[1] - end_node.position[1])**2)
+            child.h = (abs(child.position[0] - end_node.position[0])**2) + (abs(child.position[1] - end_node.position[1])**2)
             child.f = child.g + child.h
-
+            
+    
             # Child is already in the open list
             for open_node in open_list:
                 if child == open_node and child.g > open_node.g:
@@ -156,7 +153,8 @@ def astar(map_, start, end):
 
                 # Add the child to the open list
             open_list.append(child)
-        
+            
+    
 
 def mouse_drawing(event, x, y, flags, params):
     global obst
@@ -237,7 +235,7 @@ while True:
         x+=3
 
     fill_case(x,y,cx,cy,(20,20,40))
-    
+
     if key == 97:
         
         if b == 1:
@@ -252,11 +250,13 @@ while True:
         find_color(100,100)
         start = (int(x/taille_case),int(y/taille_case))
         end = (10,10)
-        print(map_)
         path = astar(map_,start,end)
         print(path)
+        print(Obstacle.obst)
         for i in path:
-            fill_case(i[0]*taille_case,i[1]*taille_case,-700,-700,(100,100,100))
+            fill_case(i[1]*taille_case,i[0]*taille_case,-700,-700,(100,100,100))
+            map_[i[0]][i[1]]=2
+        print(map_)
 
     if b == 2:
         print(fps)
@@ -296,11 +296,6 @@ while True:
         for i in obst:
             cv2.circle(img, (int(i.get_valuex()),int(i.get_valuey())), 7, (255,255,255), 1)
             cv2.line(img, (int(x),int(y)),(int(i.get_valuex()),int(i.get_valuey())), (100,100,100))
-
-    
-        
-        
-
 
     
     fps=cv2.getTickFrequency()/(cv2.getTickCount()-tickmark)
