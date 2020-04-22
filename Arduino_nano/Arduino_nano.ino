@@ -2,17 +2,19 @@
 #include "MSP.h"
 #include <AESLib.h>
 #include <SPI.h>
-#include <printf.h>
+// #include <printf.h>
 #include <nRF24L01.h>
 #include <RF24_config.h>
 #include <RF24.h>
-#include <LowPower.h>
-AES aes;
+// #include <LowPower.h>
 MSP msp;
 
 //nRF24L01
 #define CE_PIN 13
 #define CSN_PIN 14
+
+// Mode de service
+int mode;
 
 // CAPTEURS ULTRASON
 /* Constantes pour les broches */
@@ -31,13 +33,13 @@ const byte ECHO_ULSR      =   12;   // Broche ECHO du capteur de distance de der
 const byte TRIGGER_ULSG   =   13;  // Broche TRIGGER du capteur de distance de dessous
 const byte ECHO_ULSG      =   14;  // Broche ECHO du capteur de distance de dessous
 
-/* Constantes pour le timeout */
+// Constantes pour le timeout
 const unsigned long MEASURE_TIMEOUT = 25000UL; // 25ms = ~8m à 340m/s
 
-/* Vitesse du son dans l'air en mm/us */
+// Vitesse du son dans l'air en mm/us
 const float SOUND_SPEED = 0.34;    // 340.0 / 1000
 
-/* Niveaux de distance de 0 à 3 */
+// Niveaux de distance de 0 à 3
 byte LVL_FRONT;                    // Niveau de distance du capteur de devant
 byte LVL_LEFT;                     // Niveau de distance du capteur de gauche
 byte LVL_BACK;                     // Niveau de distance du capteur de derriere
@@ -49,28 +51,34 @@ SoftwareSerial mspSerial(1, 2);
 // AES
 // unsigned int keyLength [1] = {128};
 byte *key = (unsigned char*)"DbItbDotw200";                         // Clé de cryptage
-byte plain[] = "Open";                                              // Message a encrypter 
+byte open_msg[] = "Open";                                           // Message (Open)
+byte close_msg[] = "Close";                                         // Message (Close)
+
 // byte iv [N_BLOCK] ;
 // unsigned long long int myIv = 36753562;                          // Vecteur d'initialisation
 
 // RADIO - NRF24L01
 RF24 radio(CE_PIN,CSN_PIN);
-const byte addresses[4] = {"03499", "02989", "51914", "44204"};
+const byte addresses[][5] = {"03499", "02989", "51914", "44204"};
 
-uint16_t roll;
-uint16_t pitch;
-uint16_t yaw;
-uint16_t throttle;
+uint16_t roll;                                                      // 1000-2000
+uint16_t pitch;                                                     // 1000-2000
+uint16_t yaw;                                                       // 1000-2000
+uint16_t throttle;                                                  // 1000-2000
+uint16_t rc[4] = {roll, pitch, yaw, throttle};
+
+// Valeurs à envoyer
+int values[8];
 
 void setup() {
-  /* Initialisation du port série */
+  // Initialisation du port série
   Serial.begin(115200);
   ulSetup();
   delayMicroseconds(10);
-  /* Initialisation liaison MSP */
+  // Initialisation liaison MSP
   msp.begin(mspSerial);
   delayMicroseconds(10);
-  /* Initialisation radio */
+  // Initialisation radio
   radio.begin();
   radio.setPALevel(RF24_PA_MIN);
   radio.setChannel(100);
@@ -81,13 +89,15 @@ void setup() {
   radio.openReadingPipe(1, addresses[1]);                           // 02989 
   radio.printDetails();
   delayMicroseconds(10);
-  /* Initialisation de printf pour l'AES */
-  printf_begin();
-  delayMicroseconds(10);
+  // Initialisation de printf pour l'AES
+  // printf_begin();
+  // delayMicroseconds(10);
 }
 
 void loop() {
   ulSensor();
-  mspCom();
+  radioCom();
+  delayMicroseconds(10);
+  uint16_t rc[4] = {roll, pitch, yaw, throttle};
   delayMicroseconds(10);
 }
