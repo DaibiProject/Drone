@@ -53,7 +53,7 @@ SoftwareSerial mspSerial(1, 2);
 byte *key = (unsigned char*)"DbItbDotw200";                         // Clé de cryptage
 byte open_msg[] = "Open";                                           // Message (Open)
 byte close_msg[] = "Close";                                         // Message (Close)
-byte encrypted[17];                                                 // Message chiffre
+
 // byte iv [N_BLOCK] ;
 // unsigned long long int myIv = 36753562;                          // Vecteur d'initialisation
 
