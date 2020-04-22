@@ -1,10 +1,9 @@
-void mspCom(roll, pitch, yaw, throttle) {
+void mspCom() {
   // msp_attitude_t attitude;
   msp_raw_imu_t imu; 
   msp_altitude_t altitude;
-  msp_set_raw_rc_t rc;
   
-  msp.command(MSP_SET_RAW_RC, &rc, sizeof(rc), false);
+  msp.command(MSP_SET_RAW_RC, &rc, sizeof(rc), true);
 
   /*
   if (msp.request(MSP_ATTITUDE, &attitude, sizeof(attitude))) {
@@ -27,8 +26,8 @@ void mspCom(roll, pitch, yaw, throttle) {
     uint16_t mag_x     = imu.mag[0];
     uint16_t mag_y     = imu.mag[1];
     uint16_t mag_z     = imu.mag[2];
-  Serial.println("Accelerometer[x,y,z]: " + String(acc_x/448)+ ","+ String(acc_y/448) +","+ String(acc_z/448));
-  Serial.println("Gyroscope[x,y,z]: " + String(gyro_x/2000)+ ","+ String(gyro_y/2000) +","+ String(gyro_z/2000));
+  // Serial.println("Accelerometer[x,y,z]: " + String(acc_x/448)+ ","+ String(acc_y/448) +","+ String(acc_z/448));
+  // Serial.println("Gyroscope[x,y,z]: " + String(gyro_x/2000)+ ","+ String(gyro_y/2000) +","+ String(gyro_z/2000));
   Serial.println("Magnetometer[x,y,z]: " + String(mag_x)+ ","+ String(mag_y) +","+ String(mag_z));
   }
   if (msp.request(MSP_ALTITUDE, &altitude, sizeof(altitude))) {
