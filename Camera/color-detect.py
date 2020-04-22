@@ -28,8 +28,8 @@ while True:
     tickmark=cv2.getTickCount()
     
     #Wanted color (HSV form)
-    low_d = np.array([94, 80, 2])
-    high_d = np.array([126, 255, 255])
+    low_d = np.array([59, 160, 80])
+    high_d = np.array([100, 220, 145])
     mask2 = cv2.inRange(hsv_frame, low_d, high_d)
 
     #Thresh maks... (needed) 
@@ -107,8 +107,9 @@ while True:
     
     #Display Masks
     cv2.imshow("Frame3", mask2)
-  
-
+    print(frame[200,200])
+    cv2.circle(frame, (200,200), 2, (0,0,0), -1)
+    
     
     #Second part of FPS display
     fps=cv2.getTickFrequency()/(cv2.getTickCount()-tickmark)
