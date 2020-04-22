@@ -9,7 +9,7 @@ void radioCom() {
       }
       radio.stopListening();
       mspCom();
-      radio.write(&values)
+      radio.write(&values, sizeof(values));
     break;
 
     // Mode return to home

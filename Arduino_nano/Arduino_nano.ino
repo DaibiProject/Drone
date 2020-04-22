@@ -65,6 +65,7 @@ uint16_t roll;                                                      // 1000-2000
 uint16_t pitch;                                                     // 1000-2000
 uint16_t yaw;                                                       // 1000-2000
 uint16_t throttle;                                                  // 1000-2000
+uint16_t rc[4] = {roll, pitch, yaw, throttle};
 
 // Valeurs à envoyer
 int values[8];
