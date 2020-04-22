@@ -274,7 +274,7 @@ while True:
     cv2.line(img, (200,200), (200-int(xx),200-int(yy)), (0,100,100), 1)
     cv2.line(img, (200,200), (int(x),int(y)), (255,0,0), 1)
 
-    cv2.circle(img, (200,200), 20, (0,0,0), 1)
+    
 
     if b == 1 or b == 2:
         for i in obst:
