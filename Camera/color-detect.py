@@ -28,9 +28,9 @@ while True:
     tickmark=cv2.getTickCount()
     
     #Wanted color (HSV form)
-    low_d = np.array([59, 160, 80])
-    high_d = np.array([100, 220, 145])
-    mask2 = cv2.inRange(hsv_frame, low_d, high_d)
+    low_d = np.array([130, 200,200 ])
+    high_d = np.array([70, 150, 100])
+    mask2 = cv2.inRange(hsv_frame, high_d, low_d)
 
     #Thresh maks... (needed) 
     ret, thresh = cv2.threshold(mask2, 200, 255, 0)
