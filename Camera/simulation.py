@@ -18,7 +18,7 @@ dist=0
 x1=0
 y1=0
 obst= []
-taille_case = 20
+taille_case = 10
 cx = 0
 cy = 0
 incr = 0
@@ -143,7 +143,7 @@ def astar(map_, start, end):
                     continue
 
             child.g = current_node.g + 1
-            child.h = (abs(child.position[0] - end_node.position[0])**2) + (abs(child.position[1] - end_node.position[1])**2)
+            child.h = ((child.position[0] - end_node.position[0])**2) + ((child.position[1] - end_node.position[1])**2)
             child.f = child.g + child.h
             
             for open_node in open_list:
@@ -273,6 +273,8 @@ while True:
     cv2.line(img, (200,200), (int(xx)+200,int(yy)+200), (0,100,100), 1)
     cv2.line(img, (200,200), (200-int(xx),200-int(yy)), (0,100,100), 1)
     cv2.line(img, (200,200), (int(x),int(y)), (255,0,0), 1)
+
+    
 
     if b == 1 or b == 2:
         for i in obst:

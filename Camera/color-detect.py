@@ -10,7 +10,8 @@ a = 0
 moy = 0
 tab = [0.0,0.0,0.0,0.0,0.0]
 ouv = math.tan(48.5/2)
-
+low_d = np.array([40, 60,120])
+high_d = np.array([75, 245, 245])
 
 while True:
 
@@ -18,7 +19,8 @@ while True:
     key = cv2.waitKey(1)
     if key == 27:
         break
-
+    if key != -1:
+       print(key)
     
     #Video reading and conversion to HSV
     _, frame = cap.read()
@@ -28,8 +30,8 @@ while True:
     tickmark=cv2.getTickCount()
     
     #Wanted color (HSV form)
-    low_d = np.array([94, 80, 2])
-    high_d = np.array([126, 255, 255])
+    
+    
     mask2 = cv2.inRange(hsv_frame, low_d, high_d)
 
     #Thresh maks... (needed) 
@@ -40,7 +42,7 @@ while True:
     biggest_contours = sorted(contours, key=cv2.contourArea)[-3:]   
     if a==1 or a==2:
         try:
-            cv2.drawContours(frame, biggest_contours, -1, (0,255,0), 3)
+            cv2.drawContours(frame, biggest_contours, -1, (0,255,0), 2)
         except cv2.error:
             print ("err")
 
@@ -54,6 +56,9 @@ while True:
         elif a == 2:
             a = 0
         print(a)
+
+    if key == 9:
+        print(hsv_frame[200,200])
 
     #contour
     img = np.zeros((500,700,3), np.uint8)
@@ -107,8 +112,8 @@ while True:
     
     #Display Masks
     cv2.imshow("Frame3", mask2)
-  
-
+    cv2.circle(frame, (200,200), 2, (0,0,0), -1)
+    
     
     #Second part of FPS display
     fps=cv2.getTickFrequency()/(cv2.getTickCount()-tickmark)
@@ -116,7 +121,7 @@ while True:
     cv2.imshow('video', frame)
 
 
-
+    
 
 cap.release()
 cv2.destroyAllWindows()
