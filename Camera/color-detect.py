@@ -10,7 +10,7 @@ a = 0
 moy = 0
 tab = [0.0,0.0,0.0,0.0,0.0]
 ouv = math.tan(48.5/2)
-low_d = np.array([50, 60,120])
+low_d = np.array([40, 60,120])
 high_d = np.array([75, 245, 245])
 
 while True:
