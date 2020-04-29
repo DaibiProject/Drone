@@ -2,11 +2,9 @@
 #include "MSP.h"
 #include <AESLib.h>
 #include <SPI.h>
-// #include <printf.h>
 #include <nRF24L01.h>
 #include <RF24_config.h>
 #include <RF24.h>
-// #include <LowPower.h>
 MSP msp;
 
 //nRF24L01
@@ -48,24 +46,15 @@ byte LVL_GROUND;                   // Niveau de distance du capteur du dessous
 
 SoftwareSerial mspSerial(1, 2);
 
-// AES
-// unsigned int keyLength [1] = {128};
 byte *key = (unsigned char*)"DbItbDotw200";                         // Clé de cryptage
 byte open_msg[] = "Open";                                           // Message (Open)
 byte close_msg[] = "Close";                                         // Message (Close)
-
-// byte iv [N_BLOCK] ;
-// unsigned long long int myIv = 36753562;                          // Vecteur d'initialisation
 
 // RADIO - NRF24L01
 RF24 radio(CE_PIN,CSN_PIN);
 const byte addresses[][5] = {"03499", "02989", "51914", "44204"};
 
-uint16_t roll;                                                      // 1000-2000
-uint16_t pitch;                                                     // 1000-2000
-uint16_t yaw;                                                       // 1000-2000
-uint16_t throttle;                                                  // 1000-2000
-uint16_t rc[4] = {roll, pitch, yaw, throttle};
+uint16_t rc[4] = {0, 0, 0, 0};     //roll, pitch, yaw, throttle
 
 // Valeurs à envoyer
 int values[8];
@@ -89,15 +78,10 @@ void setup() {
   radio.openReadingPipe(1, addresses[1]);                           // 02989 
   radio.printDetails();
   delayMicroseconds(10);
-  // Initialisation de printf pour l'AES
-  // printf_begin();
-  // delayMicroseconds(10);
 }
 
 void loop() {
   ulSensor();
   radioCom();
-  delayMicroseconds(10);
-  uint16_t rc[4] = {roll, pitch, yaw, throttle};
   delayMicroseconds(10);
 }
