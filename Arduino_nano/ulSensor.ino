@@ -48,47 +48,47 @@ void ulSensor() {
   /* Délai d'attente pour éviter d'afficher trop de résultats à la seconde */
   //  delay(500);
 
-  if (d_front < 10) {
+  if (d_front > 15) {
     LVL_FRONT = 3;
-  } else if (d_front < 15) {
+  } else if (d_front > 20) {
     LVL_FRONT = 2;
-  } else if (d_front < 20) {
+  } else if (d_front > 25) {
     LVL_FRONT = 1;
   } else {
     LVL_FRONT = 0;
   }
-  if (d_left < 10) {
+  if (d_left > 15) {
     LVL_LEFT = 3;
-  } else if (d_left < 15) {
+  } else if (d_left > 20) {
     LVL_LEFT = 2;
-  } else if (d_left < 20) {
+  } else if (d_left > 25) {
     LVL_LEFT = 1;
   } else {
     LVL_LEFT = 0;
   }
-  if (d_back < 10) {
+  if (d_back > 15) {
     LVL_BACK = 3;
-  } else if (d_back < 15) {
+  } else if (d_back > 20) {
     LVL_BACK = 2;
-  } else if (d_back < 20) {
+  } else if (d_back > 25) {
     LVL_BACK = 1;
   } else {
     LVL_BACK = 0;
   }
-  if (d_right < 10) {
+  if (d_right > 15) {
     LVL_RIGHT = 3;
-  } else if (d_right < 15) {
+  } else if (d_right > 20) {
     LVL_RIGHT = 2;
-  } else if (d_right < 20) {
+  } else if (d_right > 25) {
     LVL_RIGHT = 1;
   } else {
     LVL_RIGHT = 0;
   }
-  if (d_ground < 10) {
+  if (d_ground > 15) {
     LVL_GROUND = 3;
-  } else if (d_ground < 15) {
+  } else if (d_ground > 20) {
     LVL_GROUND = 2;
-  } else if (d_ground < 20) {
+  } else if (d_ground > 25) {
     LVL_GROUND = 1;
   } else {
     LVL_GROUND = 0;
