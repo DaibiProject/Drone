@@ -18,7 +18,7 @@ dist=0
 x1=0
 y1=0
 obst= []
-taille_case = 10
+taille_case = 20
 cx = 0
 cy = 0
 incr = 0
@@ -274,8 +274,20 @@ while True:
     cv2.line(img, (200,200), (200-int(xx),200-int(yy)), (0,100,100), 1)
     cv2.line(img, (200,200), (int(x),int(y)), (255,0,0), 1)
 
-    
 
+
+    #Simulate proximity alert
+    x1 = round(x/taille_case)
+    y1 = round(y/taille_case)
+
+    for i in range(1,3):
+        Obstacle.obst[x1 + i][y1]
+        Obstacle.obst[x1 - i][y1]
+        Obstacle.obst[y1 + i][x1]
+        Obstacle.obst[y1 - i][x1]
+
+
+    
     if b == 1 or b == 2:
         for i in obst:
             cv2.circle(img, (int(i.get_valuex()),int(i.get_valuey())), 7, (255,255,255), 1)
