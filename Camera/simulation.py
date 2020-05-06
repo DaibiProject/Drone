@@ -54,7 +54,7 @@ class Obstacle:
         self.x1 = xx/taille_case
         self.y1 = yy/taille_case
         Obstacle.obst[self.index]=[self.x,self.y]
-        map_[int(self.y1)][int(self.x1)] = 1
+        map_[int(self.y1)][int(self.x1)] = 3
 
     def get_valuex(self):
         return self.x
@@ -199,7 +199,12 @@ while True:
     for i in obst:
         if b==1 or b==2:
             cv2.line(img, (int(x),int(y)),((i.get_valuex()),int(i.get_valuey())), (0,0,0))
-        fill_case(i.get_valuex(),i.get_valuey(), -100, -100,(50,20,20))
+
+        if map_[int(i.get_valuey()/taille_case)][int(i.get_valuex()/taille_case)] == 3:
+            fill_case(i.get_valuex(),i.get_valuey(), -100, -100,(20,20,20))
+
+        elif map_[int(i.get_valuey()/taille_case)][int(i.get_valuex()/taille_case)] == 1:
+            fill_case(i.get_valuex(),i.get_valuey(), -100, -100,(50,20,20))
     fill_case(x,y,cx,cy,(0,0,0))
 
     #Key mapping
@@ -286,17 +291,27 @@ while True:
     for i in range(1,4):
         if map_ != []:
             h = 4-i
-            if map_[y1][x1 + h] == 1:
+            if map_[y1][x1 + h] == 1 or map_[y1][x1 + h] == 3:
                 detection[1] = h
+                if map_[y1][x1 + h] == 3:
+                    map_[y1][x1 + h] == 1
                 
-            if map_[y1][x1 - h] == 1:
+                
+            if map_[y1][x1 - h] == 1 or map_[y1][x1 - h] == 3:
                 detection[3] = h
+                if map_[y1][x1 - h] == 3:
+                    map_[y1][x1 - h] == 1
+                    
             
-            if map_[y1 + h][x1] == 1:
+            if map_[y1 + h][x1] == 1 or map_[y1 + h][x1] == 3:
                 detection[2] = h
+                if map_[y1 + h][x1] == 3:
+                    map_[y1 + h][x1] == 1
                 
-            if map_[y1 - h][x1] == 1:
+            if map_[y1 - h][x1] == 1 or map_[y1 - h][x1] == 3:
                 detection[0] = h
+                if map_[y1 - h][x1] == 3:
+                    map_[y1 - h][x1] == 1
                 
 
 
