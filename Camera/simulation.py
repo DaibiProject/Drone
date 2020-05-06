@@ -189,7 +189,7 @@ while True:
 
     #Radar
     fill_case((900/taille_case-4)*taille_case,3*taille_case, -700,-700, (0,0,50))
-    print(detection)
+
     for i in range(1,4):
         fill_case((900/taille_case-4)*taille_case,(3-i)*taille_case, -700,-700, (0,0,0))
         fill_case((900/taille_case-4)*taille_case,(3+i)*taille_case, -700,-700, (0,0,0))
@@ -208,7 +208,14 @@ while True:
     if detection[3] > 0:
         fill_case((900/taille_case-4-detection[3])*taille_case,3*taille_case, -700,-700, (100,20,20))
 
-    
+    for i in range(0,len(path)):
+        if path[i] == (int(y/taille_case),int(x/taille_case)):
+            print(path[i+1][0] - int(y/taille_case))
+            print(path[i+1][1] - int(x/taille_case))
+            fill_case((900/taille_case-4+(path[i+1][1] - int(x/taille_case)))*taille_case,(3+(path[i+1][0] - int(y/taille_case)))*taille_case, -700,-700, (0,0,0))
+            fill_case((900/taille_case-4+(path[i+1][1] - int(x/taille_case)))*taille_case,(3+(path[i+1][0] - int(y/taille_case)))*taille_case, -700,-700, (100,100,100))
+            fill_case((900/taille_case-4+(path[i+2][1] - int(x/taille_case)))*taille_case,(3+(path[i+2][0] - int(y/taille_case)))*taille_case, -700,-700, (0,0,0))
+            fill_case((900/taille_case-4+(path[i+2][1] - int(x/taille_case)))*taille_case,(3+(path[i+2][0] - int(y/taille_case)))*taille_case, -700,-700, (100,100,100))
 
         
         
@@ -289,7 +296,6 @@ while True:
             fill_case(i[1]*taille_case,i[0]*taille_case,-700,-700,(100,100,100))
             if map_[i[0]][i[1]] == 0:
                 map_[i[0]][i[1]]=2
-        print(detection)
 
     if b == 2:
         print(fps)
