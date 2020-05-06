@@ -24,6 +24,8 @@ cy = 0
 incr = 0
 map_ = []
 
+detection = [0,0,0,0,0]
+
 
 #grid display
 for i in range(int(700/taille_case)):
@@ -244,6 +246,7 @@ while True:
             fill_case(i[1]*taille_case,i[0]*taille_case,-700,-700,(100,100,100))
             map_[i[0]][i[1]]=2
         print(map_)
+        print(detection)
 
     if b == 2:
         print(fps)
@@ -277,14 +280,24 @@ while True:
 
 
     #Simulate proximity alert
-    x1 = round(x/taille_case)
-    y1 = round(y/taille_case)
+    x1 = int(x/taille_case)
+    y1 = int(y/taille_case)
 
-    for i in range(1,3):
-        Obstacle.obst[x1 + i][y1]
-        Obstacle.obst[x1 - i][y1]
-        Obstacle.obst[y1 + i][x1]
-        Obstacle.obst[y1 - i][x1]
+    for i in range(1,4):
+        if map_ != []:
+            h = 4-i
+            if map_[y1][x1 + h] == 1:
+                detection[1] = h
+                
+            if map_[y1][x1 - h] == 1:
+                detection[3] = h
+            
+            if map_[y1 + h][x1] == 1:
+                detection[2] = h
+                
+            if map_[y1 - h][x1] == 1:
+                detection[0] = h
+                
 
 
     
