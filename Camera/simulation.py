@@ -190,12 +190,26 @@ while True:
     #Radar
     fill_case((900/taille_case-4)*taille_case,3*taille_case, -700,-700, (0,0,50))
     print(detection)
+    for i in range(1,4):
+        fill_case((900/taille_case-4)*taille_case,(3-i)*taille_case, -700,-700, (0,0,0))
+        fill_case((900/taille_case-4)*taille_case,(3+i)*taille_case, -700,-700, (0,0,0))
+        fill_case((900/taille_case-4-i)*taille_case,3*taille_case, -700,-700, (0,0,0))
+        fill_case((900/taille_case-4+i)*taille_case,3*taille_case, -700,-700, (0,0,0))
+        
     if detection[0] > 0:
         fill_case((900/taille_case-4)*taille_case,(3-detection[0])*taille_case, -700,-700, (100,20,20))
-    else:
-        fill_case((900/taille_case-4)*taille_case,3*taille_case-1, -700,-700, (0,0,0))
-        fill_case((900/taille_case-4)*taille_case,3*taille_case-2, -700,-700, (0,0,0))
-        fill_case((900/taille_case-4)*taille_case,3*taille_case-3, -700,-700, (0,0,0))
+
+    if detection[2] > 0:
+        fill_case((900/taille_case-4)*taille_case,(3+detection[2])*taille_case, -700,-700, (100,20,20))
+
+    if detection[1] > 0:
+        fill_case((900/taille_case-4+detection[1])*taille_case,3*taille_case, -700,-700, (100,20,20))
+
+    if detection[3] > 0:
+        fill_case((900/taille_case-4-detection[3])*taille_case,3*taille_case, -700,-700, (100,20,20))
+
+    
+
         
         
         
