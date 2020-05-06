@@ -23,7 +23,7 @@ cx = 0
 cy = 0
 incr = 0
 map_ = []
-
+path =[]
 detection = [0,0,0,0,0]
 
 
@@ -80,6 +80,7 @@ class Node():
 
 #Path maker (A* version)
 def astar(map_, start, end):
+    
     """Returns a list of tuples as a path from the given start to the given end in the given maze"""
     
     start_node = Node(None, start)
@@ -183,6 +184,9 @@ while True:
     if key == 27:
         break
 
+    for i in path:
+        fill_case(i[1]*taille_case,i[0]*taille_case,700,700,(100,100,100))
+        
     i = 0
     while i <900:
         cv2.line(img, (int(i), 0), (int(i), 700), (30,30,30))
@@ -201,10 +205,10 @@ while True:
             cv2.line(img, (int(x),int(y)),((i.get_valuex()),int(i.get_valuey())), (0,0,0))
 
         if map_[int(i.get_valuey()/taille_case)][int(i.get_valuex()/taille_case)] == 3:
-            fill_case(i.get_valuex(),i.get_valuey(), -100, -100,(20,20,20))
+            fill_case(i.get_valuex(),i.get_valuey(), -100, -100,(70,30,30))
 
         elif map_[int(i.get_valuey()/taille_case)][int(i.get_valuex()/taille_case)] == 1:
-            fill_case(i.get_valuex(),i.get_valuey(), -100, -100,(50,20,20))
+            fill_case(i.get_valuex(),i.get_valuey(), -100, -100,(120,60,60))
     fill_case(x,y,cx,cy,(0,0,0))
 
     #Key mapping
@@ -241,16 +245,13 @@ while True:
         elif b == 2:
             b = 0
             
-    if key == 9:
-        start = (int(y/taille_case),int(x/taille_case))
-        end = (10,10)
-        path = astar(map_,start,end)
-        print(path)
-        print(Obstacle.obst)
+    if key == 9:           
+        path = astar(map_,(int(y/taille_case),int(x/taille_case)),(10,10))
+        
         for i in path:
             fill_case(i[1]*taille_case,i[0]*taille_case,-700,-700,(100,100,100))
-            map_[i[0]][i[1]]=2
-        print(map_)
+            if map_[i[0]][i[1]] == 0:
+                map_[i[0]][i[1]]=2
         print(detection)
 
     if b == 2:
@@ -282,7 +283,8 @@ while True:
     cv2.line(img, (200,200), (200-int(xx),200-int(yy)), (0,100,100), 1)
     cv2.line(img, (200,200), (int(x),int(y)), (255,0,0), 1)
 
-
+    
+        
 
     #Simulate proximity alert
     x1 = int(x/taille_case)
@@ -294,25 +296,52 @@ while True:
             if map_[y1][x1 + h] == 1 or map_[y1][x1 + h] == 3:
                 detection[1] = h
                 if map_[y1][x1 + h] == 3:
-                    print("f")
                     map_[y1][x1 + h] = 1
+                    for i in path:
+                        fill_case(i[1],i[0],700,700,(60,60,60))
+                    path = astar(map_,(int(y/taille_case),int(x/taille_case)),(10,10))
+                    for i in path:
+                        fill_case(i[1]*taille_case,i[0]*taille_case,-700,-700,(100,100,100))
+                        if map_[i[0]][i[1]] == 0:
+                            map_[i[0]][i[1]]=2
                 
                 
             if map_[y1][x1 - h] == 1 or map_[y1][x1 - h] == 3:
                 detection[3] = h
                 if map_[y1][x1 - h] == 3:
                     map_[y1][x1 - h] = 1
+                    for i in path:
+                        fill_case(i[1],i[0],700,700,(60,60,60))
+                    path = astar(map_,(int(y/taille_case),int(x/taille_case)),(10,10))
+                    for i in path:
+                        fill_case(i[1]*taille_case,i[0]*taille_case,-700,-700,(100,100,100))
+                        if map_[i[0]][i[1]] == 0:
+                            map_[i[0]][i[1]]=2
                     
             
             if map_[y1 + h][x1] == 1 or map_[y1 + h][x1] == 3:
                 detection[2] = h
                 if map_[y1 + h][x1] == 3:
                     map_[y1 + h][x1] = 1
+                    for i in path:
+                        fill_case(i[1],i[0],700,700,(60,60,60))
+                    path = astar(map_,(int(y/taille_case),int(x/taille_case)),(10,10))
+                    for i in path:
+                        fill_case(i[1]*taille_case,i[0]*taille_case,-700,-700,(100,100,100))
+                        if map_[i[0]][i[1]] == 0:
+                            map_[i[0]][i[1]]=2
                 
             if map_[y1 - h][x1] == 1 or map_[y1 - h][x1] == 3:
                 detection[0] = h
                 if map_[y1 - h][x1] == 3:
                     map_[y1 - h][x1] = 1
+                    for i in path:
+                        fill_case(i[1],i[0],700,700,(60,60,60))
+                    path = astar(map_,(int(y/taille_case),int(x/taille_case)),(10,10))
+                    for i in path:
+                        fill_case(i[1]*taille_case,i[0]*taille_case,-700,-700,(100,100,100))
+                        if map_[i[0]][i[1]] == 0:
+                            map_[i[0]][i[1]]=2
                 
 
 
