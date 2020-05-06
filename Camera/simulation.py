@@ -191,7 +191,7 @@ while True:
     fill_case((900/taille_case-4)*taille_case,3*taille_case, -700,-700, (0,0,50))
     print(detection)
     if detection[0] > 0:
-        fill_case((900/taille_case-4)*taille_case,(3*taille_case)-detection[0], -700,-700, (100,20,20))
+        fill_case((900/taille_case-4)*taille_case,(3-detection[0])*taille_case, -700,-700, (100,20,20))
     else:
         fill_case((900/taille_case-4)*taille_case,3*taille_case-1, -700,-700, (0,0,0))
         fill_case((900/taille_case-4)*taille_case,3*taille_case-2, -700,-700, (0,0,0))
@@ -312,7 +312,7 @@ while True:
     #Simulate proximity alert
     x1 = int(x/taille_case)
     y1 = int(y/taille_case)
-
+    detection = [0,0,0,0,0]
     for i in range(1,4):
         if map_ != []:
             h = 4-i
