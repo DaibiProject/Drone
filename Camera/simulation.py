@@ -186,6 +186,21 @@ while True:
 
     for i in path:
         fill_case(i[1]*taille_case,i[0]*taille_case,700,700,(100,100,100))
+
+    #Radar
+    fill_case((900/taille_case-4)*taille_case,3*taille_case, -700,-700, (0,0,50))
+    print(detection)
+    if detection[0] > 0:
+        fill_case((900/taille_case-4)*taille_case,(3*taille_case)-detection[0], -700,-700, (100,20,20))
+    else:
+        fill_case((900/taille_case-4)*taille_case,3*taille_case-1, -700,-700, (0,0,0))
+        fill_case((900/taille_case-4)*taille_case,3*taille_case-2, -700,-700, (0,0,0))
+        fill_case((900/taille_case-4)*taille_case,3*taille_case-3, -700,-700, (0,0,0))
+        
+        
+        
+        
+    
         
     i = 0
     while i <900:
@@ -195,7 +210,15 @@ while True:
     while i < 700:
         cv2.line(img, (0, int(i)), (900, int(i)), (30,30,30))
         i+= taille_case
-        
+
+    cv2.line(img, (int((900/taille_case-7)*taille_case), 0), (int((900/taille_case-7)*taille_case), int(7*taille_case)), (0,0,200),1)
+    cv2.line(img, (int((900/taille_case-7)*taille_case), int(7*taille_case)), (int((900/taille_case)*taille_case), int(7*taille_case)) , (0,0,200),1)
+    
+    
+    
+
+    
+    
     cv2.line(img, (int(x),int(y)), (int(xx)+200, int(yy)+200), (0,0,0), 1)
     cv2.line(img, (int(x),int(y)), (-int(xx)+200, -int(yy)+200), (0,0,0), 1)
     cv2.circle(img, (int(x),int(y)), int(rayon), (0,0,0), 1)
@@ -304,6 +327,7 @@ while True:
                         fill_case(i[1]*taille_case,i[0]*taille_case,-700,-700,(100,100,100))
                         if map_[i[0]][i[1]] == 0:
                             map_[i[0]][i[1]]=2
+
                 
                 
             if map_[y1][x1 - h] == 1 or map_[y1][x1 - h] == 3:
@@ -317,6 +341,7 @@ while True:
                         fill_case(i[1]*taille_case,i[0]*taille_case,-700,-700,(100,100,100))
                         if map_[i[0]][i[1]] == 0:
                             map_[i[0]][i[1]]=2
+
                     
             
             if map_[y1 + h][x1] == 1 or map_[y1 + h][x1] == 3:
@@ -330,6 +355,7 @@ while True:
                         fill_case(i[1]*taille_case,i[0]*taille_case,-700,-700,(100,100,100))
                         if map_[i[0]][i[1]] == 0:
                             map_[i[0]][i[1]]=2
+                            
                 
             if map_[y1 - h][x1] == 1 or map_[y1 - h][x1] == 3:
                 detection[0] = h
@@ -342,6 +368,7 @@ while True:
                         fill_case(i[1]*taille_case,i[0]*taille_case,-700,-700,(100,100,100))
                         if map_[i[0]][i[1]] == 0:
                             map_[i[0]][i[1]]=2
+            
                 
 
 
