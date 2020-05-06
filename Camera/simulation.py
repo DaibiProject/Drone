@@ -294,24 +294,25 @@ while True:
             if map_[y1][x1 + h] == 1 or map_[y1][x1 + h] == 3:
                 detection[1] = h
                 if map_[y1][x1 + h] == 3:
-                    map_[y1][x1 + h] == 1
+                    print("f")
+                    map_[y1][x1 + h] = 1
                 
                 
             if map_[y1][x1 - h] == 1 or map_[y1][x1 - h] == 3:
                 detection[3] = h
                 if map_[y1][x1 - h] == 3:
-                    map_[y1][x1 - h] == 1
+                    map_[y1][x1 - h] = 1
                     
             
             if map_[y1 + h][x1] == 1 or map_[y1 + h][x1] == 3:
                 detection[2] = h
                 if map_[y1 + h][x1] == 3:
-                    map_[y1 + h][x1] == 1
+                    map_[y1 + h][x1] = 1
                 
             if map_[y1 - h][x1] == 1 or map_[y1 - h][x1] == 3:
                 detection[0] = h
                 if map_[y1 - h][x1] == 3:
-                    map_[y1 - h][x1] == 1
+                    map_[y1 - h][x1] = 1
                 
 
 
