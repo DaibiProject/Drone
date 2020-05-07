@@ -210,33 +210,9 @@ while True:
 
     for i in range(0,len(path)):
         if path[i] == (int(y/taille_case),int(x/taille_case)):
-            print(path[i+1][0] - int(y/taille_case))
-            print(path[i+1][1] - int(x/taille_case))
             fill_case((900/taille_case-4+(path[i+1][1] - int(x/taille_case)))*taille_case,(3+(path[i+1][0] - int(y/taille_case)))*taille_case, -700,-700, (0,0,0))
-            fill_case((900/taille_case-4+(path[i+1][1] - int(x/taille_case)))*taille_case,(3+(path[i+1][0] - int(y/taille_case)))*taille_case, -700,-700, (100,100,100))
             fill_case((900/taille_case-4+(path[i+2][1] - int(x/taille_case)))*taille_case,(3+(path[i+2][0] - int(y/taille_case)))*taille_case, -700,-700, (0,0,0))
-            fill_case((900/taille_case-4+(path[i+2][1] - int(x/taille_case)))*taille_case,(3+(path[i+2][0] - int(y/taille_case)))*taille_case, -700,-700, (100,100,100))
-
-        
-        
-        
-        
-    
-        
-    i = 0
-    while i <900:
-        cv2.line(img, (int(i), 0), (int(i), 700), (30,30,30))
-        i+= taille_case
-    i = 0
-    while i < 700:
-        cv2.line(img, (0, int(i)), (900, int(i)), (30,30,30))
-        i+= taille_case
-
-    cv2.line(img, (int((900/taille_case-7)*taille_case), 0), (int((900/taille_case-7)*taille_case), int(7*taille_case)), (0,0,200),1)
-    cv2.line(img, (int((900/taille_case-7)*taille_case), int(7*taille_case)), (int((900/taille_case)*taille_case), int(7*taille_case)) , (0,0,200),1)
-    
-    
-    
+            fill_case((900/taille_case-4+(path[i+3][1] - int(x/taille_case)))*taille_case,(3+(path[i+3][0] - int(y/taille_case)))*taille_case, -700,-700, (0,0,0))
 
     
     
@@ -302,7 +278,25 @@ while True:
         print(obst)
     cv2.circle(img, (int(x),int(y)), 1, (0,0,255), 2)
     cv2.circle(img, (200,200), 16, (150,0,150), 2)
+
+    for i in range(0,len(path)):
+        if path[i] == (int(y/taille_case),int(x/taille_case)):
+            fill_case((900/taille_case-4+(path[i+1][1] - int(x/taille_case)))*taille_case,(3+(path[i+1][0] - int(y/taille_case)))*taille_case, -700,-700, (100,100,100))
+            fill_case((900/taille_case-4+(path[i+2][1] - int(x/taille_case)))*taille_case,(3+(path[i+2][0] - int(y/taille_case)))*taille_case, -700,-700, (90,90,90))
+            fill_case((900/taille_case-4+(path[i+3][1] - int(x/taille_case)))*taille_case,(3+(path[i+3][0] - int(y/taille_case)))*taille_case, -700,-700, (80,80,80))
+
+    i = 0
+    while i <900:
+        cv2.line(img, (int(i), 0), (int(i), 700), (30,30,30))
+        i+= taille_case
+    i = 0
+    while i < 700:
+        cv2.line(img, (0, int(i)), (900, int(i)), (30,30,30))
+        i+= taille_case
     
+
+    cv2.line(img, (int((900/taille_case-7)*taille_case), 0), (int((900/taille_case-7)*taille_case), int(7*taille_case)), (0,0,200),1)
+    cv2.line(img, (int((900/taille_case-7)*taille_case), int(7*taille_case)), (int((900/taille_case)*taille_case), int(7*taille_case)) , (0,0,200),1)
     
     cv2.line(img, (200,200), (int(xx)+200,int(yy)+200), (0,0,0), 1)
     cv2.line(img, (200,200), (200-int(xx),200-int(yy)), (0,0,0), 1)
