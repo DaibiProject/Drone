@@ -215,11 +215,12 @@ while True:
             fill_case((900/taille_case-4+(path[i+3][1] - int(x/taille_case)))*taille_case,(3+(path[i+3][0] - int(y/taille_case)))*taille_case, -700,-700, (0,0,0))
 
     
-    
+    #player & direction to center with perpendicular
     cv2.line(img, (int(x),int(y)), (int(xx)+200, int(yy)+200), (0,0,0), 1)
     cv2.line(img, (int(x),int(y)), (-int(xx)+200, -int(yy)+200), (0,0,0), 1)
     cv2.circle(img, (int(x),int(y)), int(rayon), (0,0,0), 1)
-        
+
+    #Obstacle 
     for i in obst:
         if b==1 or b==2:
             cv2.line(img, (int(x),int(y)),((i.get_valuex()),int(i.get_valuey())), (0,0,0))
@@ -255,24 +256,20 @@ while True:
     fill_case(x,y,cx,cy,(20,20,40))
 
     if key == 97:
-        
         if b == 1:
             b = 2
-        
         elif b == 0:
             b = 1
-
         elif b == 2:
             b = 0
             
     if key == 9:           
         path = astar(map_,(int(y/taille_case),int(x/taille_case)),(10,10))
-        
         for i in path:
             fill_case(i[1]*taille_case,i[0]*taille_case,-700,-700,(100,100,100))
             if map_[i[0]][i[1]] == 0:
                 map_[i[0]][i[1]]=2
-
+    #Just useless debugging
     if b == 2:
         print(fps)
         print(obst)
@@ -285,6 +282,7 @@ while True:
             fill_case((900/taille_case-4+(path[i+2][1] - int(x/taille_case)))*taille_case,(3+(path[i+2][0] - int(y/taille_case)))*taille_case, -700,-700, (90,90,90))
             fill_case((900/taille_case-4+(path[i+3][1] - int(x/taille_case)))*taille_case,(3+(path[i+3][0] - int(y/taille_case)))*taille_case, -700,-700, (80,80,80))
 
+    #line and colonne display
     i = 0
     while i <900:
         cv2.line(img, (int(i), 0), (int(i), 700), (30,30,30))
@@ -294,10 +292,9 @@ while True:
         cv2.line(img, (0, int(i)), (900, int(i)), (30,30,30))
         i+= taille_case
     
-
+    #major calculation & display, including color case of player, color endcase, line between player and end...
     cv2.line(img, (int((900/taille_case-7)*taille_case), 0), (int((900/taille_case-7)*taille_case), int(7*taille_case)), (0,0,200),1)
     cv2.line(img, (int((900/taille_case-7)*taille_case), int(7*taille_case)), (int((900/taille_case)*taille_case), int(7*taille_case)) , (0,0,200),1)
-    
     cv2.line(img, (200,200), (int(xx)+200,int(yy)+200), (0,0,0), 1)
     cv2.line(img, (200,200), (200-int(xx),200-int(yy)), (0,0,0), 1)
     
@@ -386,18 +383,20 @@ while True:
                 
 
 
-    
+    #more useless debugging
     if b == 1 or b == 2:
         for i in obst:
             cv2.circle(img, (int(i.get_valuex()),int(i.get_valuey())), 7, (255,255,255), 1)
             cv2.line(img, (int(x),int(y)),(int(i.get_valuex()),int(i.get_valuey())), (100,100,100))
 
+    #screen and fps display  
     fps=cv2.getTickFrequency()/(cv2.getTickCount()-tickmark)
     cv2.putText(img, "FPS: {:05.2f}".format(fps), (10, 30), cv2.FONT_HERSHEY_PLAIN, 2, (255, 0, 0), 2)
     cv2.imshow("simu",img)
     cv2.putText(img, "FPS: {:05.2f}".format(fps), (10, 30), cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 0), 2)
     
     cv2.setMouseCallback("simu", mouse_drawing)
-    
+
+#Juste destroy screen at end    
 cv2.destroyAllWindows()
 
