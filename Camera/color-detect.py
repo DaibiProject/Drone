@@ -17,7 +17,7 @@ def write(msgArr):
   msgArr.insert(0, "^")
   msgArr.append("*")  
   msgArr.insert(0,len(msgArr))
-  msg = ''.join(str(i) for i in msgArr)
+  msg = ''.join(str(i) for i in msgArr).replace("*","").replace("^","")
   ser.write(msg)
 
 def read():
