@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import math
 from math import sqrt
-#import smbus
+import serial
 
 #Variable statement 
 cap = cv2.VideoCapture(0)
@@ -12,6 +12,21 @@ tab = [0.0,0.0,0.0,0.0,0.0]
 ouv = math.tan(48.5/2)
 low_d = np.array([45, 55,90])
 high_d = np.array([75, 245, 245])
+
+def write(msgArr):
+  msgArr.insert(0, "^")
+  msgArr.append("*")  
+  msgArr.insert(0,len(msgArr))
+  msg = ''.join(str(i) for i in msgArr)
+  ser.write(msg)
+
+def read():
+  answ = ser.read()
+  answArr = list(answ)
+  if int(answArr[1]) != len(answArr)-3: #on enleve le bit de start, le bit de stop, et le bit de length (answArr[1])
+    return None
+  else:
+    return answArr
 
 while True:
 
