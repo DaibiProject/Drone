@@ -4,7 +4,8 @@ import math
 from math import sqrt
 import serial
 
-#Variable statement 
+#Variable statement
+mapShow = np.zeros((700,900,3), np.uint8)
 cap = cv2.VideoCapture(0)
 a = 0
 moy = 0
@@ -12,6 +13,8 @@ tab = [0.0,0.0,0.0,0.0,0.0]
 ouv = math.tan(48.5/2)
 low_d = np.array([45, 55,90])
 high_d = np.array([75, 245, 245])
+mapV = []
+taille_case = 20
 
 def write(msgArr):
   msgArr.insert(0, "^")
@@ -27,6 +30,28 @@ def read():
     return None
   else:
     return answArr
+
+
+def set_map():
+    for i in range(int(700/taille_case)):
+        mapV.append([0])
+        for y in range(int((900/taille_case))-1):
+            mapV[i].append(0)
+
+def map_disp():
+    global taille_case
+    i = 0
+    while i <900:
+        cv2.line(mapShow, (int(i), 0), (int(i), 700), (30,30,30))
+        i+= taille_case
+    i = 0
+    while i < 700:
+        cv2.line(mapShow, (0, int(i)), (900, int(i)), (30,30,30))
+        i+= taille_case
+    i = 0
+    cv2.rectange(mapShow, (340,440),(360,460), (100,100,100), -1)
+    
+    
 
 while True:
 
@@ -121,9 +146,9 @@ while True:
                   
             
                 
+    
 
-
-
+    map_disp()
     
     #Display Masks
     cv2.imshow("Frame3", mask2)
@@ -134,6 +159,7 @@ while True:
     fps=cv2.getTickFrequency()/(cv2.getTickCount()-tickmark)
     cv2.putText(frame, "FPS: {:05.2f}".format(fps), (10, 30), cv2.FONT_HERSHEY_PLAIN, 2, (255, 0, 0), 2)
     cv2.imshow('video', frame)
+    cv2.imshow('map', mapShow)
 
 
     
